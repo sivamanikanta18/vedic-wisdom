@@ -1,0 +1,85 @@
+.section {
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 0 1rem;
+}
+
+.card {
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.95), 
+    rgba(255, 248, 231, 0.95));
+  border: 2px solid var(--gold-light);
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: var(--shadow-soft);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--gradient-gold);
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-strong);
+  border-color: var(--gold-primary);
+}
+
+.card:hover::before {
+  transform: scaleX(1);
+}
+
+.card h3 {
+  color: var(--deep-maroon);
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  font-family: var(--font-heading);
+}
+
+.card p {
+  color: var(--charcoal);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.card a {
+  text-decoration: none;
+  color: var(--gold-dark);
+  font-weight: 600;
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 1.5rem;
+  border: 2px solid var(--gold-primary);
+  border-radius: 25px;
+  transition: all 0.3s ease;
+}
+
+.card a:hover {
+  background: var(--gradient-gold);
+  color: white;
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .section {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .card {
+    padding: 1.5rem;
+  }
+}

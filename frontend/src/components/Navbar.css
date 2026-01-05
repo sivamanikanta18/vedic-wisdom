@@ -1,0 +1,127 @@
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to right, var(--deep-maroon), var(--deep-purple));
+  flex-wrap: wrap;
+  padding: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 3px solid var(--gold-primary);
+}
+
+.navbar a {
+  color: var(--gold-light);
+  padding: 1.2rem 1.8rem;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 500;
+  font-family: var(--font-accent);
+  letter-spacing: 0.5px;
+  position: relative;
+  transition: all 0.4s ease;
+  border-bottom: 3px solid transparent;
+}
+
+.navbar a::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 3px;
+  background: var(--gradient-gold);
+  transform: translateX(-50%);
+  transition: width 0.4s ease;
+}
+
+.navbar a:hover {
+  color: var(--gold-accent);
+  background: rgba(255, 215, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.navbar a:hover::before {
+  width: 80%;
+}
+
+.navbar a:active {
+  transform: translateY(0);
+}
+
+/* Special styling for Login link */
+.navbar .login-link {
+  background: var(--gradient-gold);
+  color: white;
+  border-radius: 8px;
+  margin-left: 1rem;
+  padding: 0.8rem 1.8rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+}
+
+.navbar .login-link:hover {
+  background: var(--gradient-sunset);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.5);
+}
+
+.navbar .login-link::before {
+  display: none;
+}
+
+/* Dashboard link styling */
+.navbar .dashboard-link {
+  background: var(--gradient-spiritual);
+  color: white;
+  border-radius: 8px;
+  margin-left: 1rem;
+  padding: 0.8rem 1.8rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+}
+
+.navbar .dashboard-link:hover {
+  background: var(--gradient-gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.5);
+}
+
+.navbar .dashboard-link::before {
+  display: none;
+}
+
+/* Logout button styling */
+.navbar .logout-btn {
+  background: transparent;
+  color: var(--gold-light);
+  border: 2px solid var(--gold-light);
+  border-radius: 8px;
+  margin-left: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  font-family: var(--font-accent);
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+.navbar .logout-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--gold-accent);
+  border-color: var(--gold-accent);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    font-size: 0.9rem;
+  }
+  
+  .navbar a {
+    padding: 1rem 1.2rem;
+    font-size: 1rem;
+  }
+}

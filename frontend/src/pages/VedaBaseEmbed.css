@@ -1,0 +1,225 @@
+/* VedaBase Embed Page */
+.vedabase-embed-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, var(--cream) 0%, var(--warm-white) 100%);
+}
+
+/* Header */
+.embed-header {
+  background: linear-gradient(to right, var(--deep-maroon), var(--deep-purple));
+  padding: 1.5rem 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 3px solid var(--gold-primary);
+}
+
+.back-button {
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid var(--gold-light);
+  color: var(--gold-light);
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.back-button:hover {
+  background: var(--gold-primary);
+  color: white;
+  border-color: var(--gold-primary);
+  transform: translateY(-2px);
+}
+
+.book-info {
+  flex: 1;
+  text-align: center;
+}
+
+.book-info h1 {
+  font-size: 1.8rem;
+  color: var(--gold-light);
+  margin-bottom: 0.25rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.chapter-info {
+  font-size: 1rem;
+  color: var(--gold-accent);
+  font-weight: 600;
+}
+
+.open-new-tab {
+  padding: 0.75rem 1.5rem;
+  background: var(--gradient-gold);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.open-new-tab:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+}
+
+/* Embed Container */
+.embed-container {
+  flex: 1;
+  position: relative;
+  background: white;
+  margin: 2rem;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow-strong);
+  border: 3px solid var(--gold-primary);
+}
+
+.vedabase-iframe {
+  width: 100%;
+  height: calc(100vh - 200px);
+  border: none;
+}
+
+/* Loading Overlay */
+.loading-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 10;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid var(--gold-light);
+  border-top: 4px solid var(--gold-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-overlay p {
+  color: var(--charcoal);
+  font-size: 1.1rem;
+}
+
+/* Footer */
+.embed-footer {
+  background: linear-gradient(135deg, var(--gold-light) 0%, var(--warm-white) 100%);
+  padding: 1.5rem 2rem;
+  text-align: center;
+  border-top: 3px solid var(--gold-primary);
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.embed-footer p {
+  margin: 0.5rem 0;
+  color: var(--charcoal);
+  font-size: 0.95rem;
+}
+
+.embed-footer a {
+  color: var(--gold-dark);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.embed-footer a:hover {
+  color: var(--sacred-orange);
+  text-decoration: underline;
+}
+
+.copyright {
+  font-size: 0.85rem;
+  opacity: 0.7;
+  font-style: italic;
+}
+
+/* Error State */
+.embed-error {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.embed-error h2 {
+  font-size: 2.5rem;
+  color: var(--deep-maroon);
+  margin-bottom: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .embed-header {
+    flex-wrap: wrap;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .book-info h1 {
+    font-size: 1.4rem;
+  }
+
+  .back-button,
+  .open-new-tab {
+    flex: 1;
+    min-width: 120px;
+    text-align: center;
+  }
+
+  .vedabase-iframe {
+    height: calc(100vh - 250px);
+  }
+
+  .embed-container {
+    margin: 0.5rem;
+  }
+
+  .embed-footer {
+    padding: 1rem;
+  }
+
+  .embed-footer p {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .embed-header {
+    flex-direction: column;
+  }
+
+  .book-info {
+    width: 100%;
+  }
+
+  .back-button,
+  .open-new-tab {
+    width: 100%;
+  }
+}

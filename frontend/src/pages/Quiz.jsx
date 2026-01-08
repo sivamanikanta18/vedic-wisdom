@@ -9,10 +9,8 @@ const Quiz = () => {
   const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
   const [totalAnswered, setTotalAnswered] = useState(0);
-  const [askInput, setAskInput] = useState("");
-  const [askAnswer, setAskAnswer] = useState("");
-  const [askLoading, setAskLoading] = useState(false);
-  const [askError, setAskError] = useState("");
+  const [quizLoading, setQuizLoading] = useState(false);
+  const [quizError, setQuizError] = useState('');
   const [sessionStats, setSessionStats] = useState({
     correct: 0,
     incorrect: 0,
@@ -20,84 +18,57 @@ const Quiz = () => {
     bestStreak: 0
   });
   const [shuffledQuestions, setShuffledQuestions] = useState([]);
-  const [askedQuestions, setAskedQuestions] = useState([]);
 
   // Shuffle questions when difficulty is selected
   useEffect(() => {
-    if (difficulty && questionBank[difficulty]) {
-      setShuffledQuestions(shuffleArray(questionBank[difficulty]));
-      setAskedQuestions([]);
-    }
+    const load = async () => {
+      if (!difficulty || !questionBank[difficulty]) return;
+
+      setQuizError('');
+
+      setQuizLoading(true);
+      const API_URL = import.meta.env.VITE_API_URL || '/api';
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 8000);
+        const resp = await fetch(`${API_URL}/ai/generate-quiz`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          signal: controller.signal,
+          body: JSON.stringify({
+            difficulty,
+            count: 10
+          })
+        });
+
+        clearTimeout(timeoutId);
+
+        const data = await resp.json();
+        if (!resp.ok || !data.success || !Array.isArray(data.questions)) {
+          throw new Error(data.message || 'Failed to generate quiz questions');
+        }
+
+        setShuffledQuestions(shuffleArray(data.questions));
+      } catch (err) {
+        console.error('AI quiz generation error:', err);
+        const isTimeout = err?.name === 'AbortError' || /aborted|timeout/i.test(err?.message || '');
+        setQuizError(
+          isTimeout
+            ? 'AI is taking too long. Using built-in questions for now.'
+            : (err.message || 'Failed to generate AI quiz. Using built-in questions.')
+        );
+        setShuffledQuestions(shuffleArray(questionBank[difficulty]));
+      } finally {
+        setQuizLoading(false);
+      }
+    };
+
+    load();
   }, [difficulty]);
 
   const questions = shuffledQuestions;
-
-  const getContextSnippets = (query) => {
-    const q = (query || '').toLowerCase();
-    const keywords = q
-      .split(/[^a-z0-9]+/)
-      .filter(Boolean)
-      .filter(w => w.length >= 4)
-      .slice(0, 12);
-
-    const allQuestions = [
-      ...(questionBank?.easy || []),
-      ...(questionBank?.medium || []),
-      ...(questionBank?.hard || [])
-    ];
-
-    const scored = allQuestions
-      .map((item) => {
-        const hay = `${item.question || ''} ${item.explanation || ''} ${item.proof || ''} ${item.reference || ''}`.toLowerCase();
-        const score = keywords.reduce((acc, kw) => (hay.includes(kw) ? acc + 1 : acc), 0);
-        return { item, score };
-      })
-      .filter(x => x.score > 0)
-      .sort((a, b) => b.score - a.score)
-      .slice(0, 8)
-      .map(({ item }) => ({
-        text: `${item.proof || ''}\n${item.explanation || ''}`.trim(),
-        source: item.reference || 'Quiz Question Bank'
-      }));
-
-    return scored;
-  };
-
-  const askQuestion = async () => {
-    const question = askInput.trim();
-    if (!question || askLoading) return;
-
-    setAskLoading(true);
-    setAskError("");
-    setAskAnswer("");
-
-    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-
-    try {
-      const response = await fetch(`${API_URL}/ai/ask`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          question,
-          contextSnippets: getContextSnippets(question)
-        })
-      });
-
-      const data = await response.json();
-      if (!response.ok || !data.success) {
-        throw new Error(data.message || 'Failed to get answer');
-      }
-
-      setAskAnswer(data.answer || '');
-    } catch (err) {
-      console.error('Ask AI error:', err);
-      setAskError(err.message || 'Error generating answer');
-    } finally {
-      setAskLoading(false);
-    }
-  };
 
   const handleSelect = (choice) => {
     setSelected(choice);
@@ -132,31 +103,15 @@ const Quiz = () => {
   const handleNext = () => {
     setShowResult(false);
     setSelected("");
-    
-    // Mark current question as asked
-    const newAskedQuestions = [...askedQuestions, questions[current].question];
-    setAskedQuestions(newAskedQuestions);
-    
-    // Get remaining unasked questions
-    const remainingQuestions = questionBank[difficulty].filter(
-      q => !newAskedQuestions.includes(q.question)
-    );
-    
-    // If all questions have been asked, reset and reshuffle
-    if (remainingQuestions.length === 0) {
-      setShuffledQuestions(shuffleArray(questionBank[difficulty]));
-      setAskedQuestions([]);
-      setCurrent(0);
-    } else {
-      // Move to next unasked question
-      if (current < questions.length - 1) {
-        setCurrent(current + 1);
-      } else {
-        // Reshuffle remaining questions
-        setShuffledQuestions(shuffleArray(remainingQuestions));
-        setCurrent(0);
-      }
+
+    if (current < questions.length - 1) {
+      setCurrent(current + 1);
+      return;
     }
+
+    // Restart the session with a fresh shuffle
+    setShuffledQuestions(shuffleArray(questions));
+    setCurrent(0);
   };
 
   const changeLevel = () => {
@@ -179,41 +134,11 @@ const Quiz = () => {
             <p className="quiz-subtitle">Continuous learning journey in Krishna Consciousness</p>
           </div>
 
-          <div className="quiz-header" style={{ marginTop: '16px' }}>
-            <h2 style={{ marginBottom: '8px' }}>Ask a Question (Scripture-Based)</h2>
-            <p className="quiz-subtitle" style={{ marginTop: 0 }}>
-              Ask any question. Krishna will answer using the available scripture proofs in this app.
-            </p>
-            <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
-              <input
-                value={askInput}
-                onChange={(e) => setAskInput(e.target.value)}
-                placeholder="Type your question (e.g., What is karma yoga?)"
-                style={{ flex: '1 1 320px', padding: '10px 12px', borderRadius: '8px', border: '1px solid #ddd' }}
-                disabled={askLoading}
-              />
-              <button
-                onClick={askQuestion}
-                disabled={!askInput.trim() || askLoading}
-                style={{ padding: '10px 14px', borderRadius: '8px', border: 'none', background: '#D4AF37', color: '#111', fontWeight: 'bold', cursor: 'pointer' }}
-              >
-                {askLoading ? 'Thinking...' : 'Ask'}
-              </button>
-            </div>
-            {askError && (
-              <div style={{ marginTop: '10px', color: '#c33' }}>{askError}</div>
-            )}
-            {askAnswer && (
-              <div style={{ marginTop: '12px', background: '#fff', borderRadius: '10px', padding: '12px', border: '1px solid #eee' }}>
-                {askAnswer.split('\n').map((line, i) => (
-                  <p key={i} style={{ margin: '6px 0' }}>{line}</p>
-                ))}
-              </div>
-            )}
-          </div>
-
           <div className="difficulty-selection">
             <h2>Choose Your Learning Level</h2>
+            {quizError && (
+              <div style={{ marginTop: '10px', color: '#c33' }}>{quizError}</div>
+            )}
             <div className="difficulty-cards">
               <div className="difficulty-card easy" onClick={() => setDifficulty('easy')}>
                 <div className="difficulty-icon">🌱</div>
@@ -272,7 +197,10 @@ const Quiz = () => {
       <main className="quiz-main">
         <div className="quiz-container">
           <div className="quiz-header">
-            <h1>Loading Questions...</h1>
+            <h1>{quizLoading ? 'Generating Questions...' : 'Loading Questions...'}</h1>
+            {quizError && (
+              <div style={{ marginTop: '10px', color: '#c33' }}>{quizError}</div>
+            )}
           </div>
         </div>
       </main>
@@ -325,36 +253,6 @@ const Quiz = () => {
 
         <div className="question-card">
           <h2 className="question-text">{questions[current].question}</h2>
-
-          <div style={{ marginTop: '14px', marginBottom: '12px', padding: '12px', borderRadius: '10px', border: '1px solid #eee', background: '#fff' }}>
-            <h3 style={{ marginTop: 0, marginBottom: '8px' }}>Ask Krishna about this topic</h3>
-            <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
-              <input
-                value={askInput}
-                onChange={(e) => setAskInput(e.target.value)}
-                placeholder="Ask any question from scriptures..."
-                style={{ flex: '1 1 320px', padding: '10px 12px', borderRadius: '8px', border: '1px solid #ddd' }}
-                disabled={askLoading}
-              />
-              <button
-                onClick={askQuestion}
-                disabled={!askInput.trim() || askLoading}
-                style={{ padding: '10px 14px', borderRadius: '8px', border: 'none', background: '#D4AF37', color: '#111', fontWeight: 'bold', cursor: 'pointer' }}
-              >
-                {askLoading ? 'Thinking...' : 'Ask'}
-              </button>
-            </div>
-            {askError && (
-              <div style={{ marginTop: '10px', color: '#c33' }}>{askError}</div>
-            )}
-            {askAnswer && (
-              <div style={{ marginTop: '12px' }}>
-                {askAnswer.split('\n').map((line, i) => (
-                  <p key={i} style={{ margin: '6px 0' }}>{line}</p>
-                ))}
-              </div>
-            )}
-          </div>
           
           <div className="choices-container">
             {questions[current].choices.map((choice, index) => (

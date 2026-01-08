@@ -14,8 +14,18 @@ async function startServer() {
     process.exit(1);
   }
 
-  app.listen(PORT, () => {
+  const server = app.listen(PORT, () => {
     console.log(`🚀 Server is running on port ${PORT}`);
+  });
+
+  server.on('error', (err) => {
+    if (err && err.code === 'EADDRINUSE') {
+      console.error(`❌ Port ${PORT} is already in use.`);
+      console.error('Close the other backend process (Ctrl+C) or set a different PORT and retry.');
+      process.exit(0);
+    }
+    console.error('❌ Server error:', err);
+    process.exit(1);
   });
 }
 

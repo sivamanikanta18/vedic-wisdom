@@ -59,6 +59,19 @@ const KrishnaChatbot = () => {
   const isScriptureQuestion = (query) => {
     const q = (query || '').toLowerCase();
 
+    const normalized = q.replace(/[^a-z0-9\s]+/g, ' ').replace(/\s+/g, ' ').trim();
+    const isGreeting =
+      normalized === 'hare krishna' ||
+      normalized === 'hare krishna hare krishna' ||
+      normalized === 'hare krishna hare krishna krishna krishna hare hare' ||
+      normalized === 'hare rama hare rama rama rama hare hare' ||
+      normalized === 'hare krishna hare krishna krishna krishna hare hare hare rama hare rama rama rama hare hare' ||
+      normalized === 'hi' ||
+      normalized === 'hello' ||
+      normalized === 'hey';
+
+    if (isGreeting) return false;
+
     if (SCRIPTURE_KEYWORDS.some(k => q.includes(k))) return true;
 
     return ALL_BOOK_TITLES.some(t => t.length > 6 && q.includes(t));
@@ -139,11 +152,11 @@ const KrishnaChatbot = () => {
       role: 'krishna',
       content: `Hare Krishna, ${name}! 🙏
 
-I am Lord Krishna, and I am here to be your companion on this spiritual journey. You can share anything with Me - your joys, your sorrows, your questions, or simply how your day went.
+Welcome to Ask Sastra — share your doubts, personal struggles, or questions, and I will guide you using wisdom from the Bhagavad Gita and Vedic scriptures.
 
-Whether you seek guidance from the Bhagavad Gita, need encouragement during difficult times, or just want to talk, I am here to listen and guide you with love and wisdom.
+You can ask about fear, stress, relationships, studies, habits, purpose of life, and spiritual practice.
 
-How are you feeling today, My dear devotee? 💙`,
+What would you like guidance on today?`,
       timestamp: new Date().toISOString()
     }]);
   }, [navigate]);
@@ -171,7 +184,7 @@ How are you feeling today, My dear devotee? 💙`,
 
     // Read token once so fallback can use it as well
     const token = localStorage.getItem('authToken');
-    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+    const API_URL = import.meta.env.VITE_API_URL || '/api';
     const forceScriptureOnly = isScriptureQuestion(userMessage);
 
     try {
@@ -204,6 +217,11 @@ How are you feeling today, My dear devotee? 💙`,
         setConversationId(data.conversationId);
         setIsLoading(false);
         return;
+      }
+
+      // If backend indicates AI is unavailable due to config/quota, show it and stop.
+      if (data?.blockFallback) {
+        console.warn('AI is unavailable (quota/billing/key). Falling back to rule-based chatbot:', data?.error || data?.message || data);
       }
 
       // If AI endpoint returned an error, fall through to fallback
@@ -297,7 +315,7 @@ How are you feeling today, My dear devotee? 💙`,
             <img src="/images/krishna_book.jpg" alt="Krishna" className="avatar-image" />
           </div>
           <div className="header-info">
-            <h1>Chat with Krishna</h1>
+            <h1>Ask Sastra</h1>
             <p className="status">
               <span className="status-dot"></span>
               Always here for you
@@ -319,7 +337,7 @@ How are you feeling today, My dear devotee? 💙`,
               )}
               <div className="message-content">
                 {msg.role === 'krishna' && (
-                  <div className="message-sender">Krishna</div>
+                  <div className="message-sender">Sastra</div>
                 )}
                 <div className="message-text">
                   {msg.content.split('\n').map((line, i) => (
@@ -379,7 +397,7 @@ How are you feeling today, My dear devotee? 💙`,
             value={inputMessage}
             onChange={(e) => setInputMessage(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder="Share your thoughts with Krishna..."
+            placeholder="Ask your doubt to Sastra..."
             className="message-input"
             rows="1"
             disabled={isLoading}
@@ -395,7 +413,7 @@ How are you feeling today, My dear devotee? 💙`,
 
         {/* Footer Note */}
         <div className="chatbot-footer">
-          <p>💙 Krishna is here to guide you with wisdom from the Bhagavad Gita and Vedic scriptures</p>
+          <p>💙 Sastra is here to guide you with wisdom from the Bhagavad Gita and Vedic scriptures</p>
         </div>
       </div>
     </div>

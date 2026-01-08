@@ -43,7 +43,7 @@ function Navbar() {
       <Link to="/essential-truths">Essential Truths</Link>
       <Link to="/chanting">Chanting</Link>
       <Link to="/quiz">Quiz</Link>
-      {isLoggedIn && <Link to="/krishna-chat" className="krishna-chat-link">💬 Chat with Krishna</Link>}
+      {isLoggedIn && <Link to="/krishna-chat" className="krishna-chat-link">Ask Sastra</Link>}
       <Link to="/about">About Us</Link>
       {isLoggedIn ? (
         <>

@@ -44,6 +44,8 @@ function Navbar() {
       <Link to="/chanting">Chanting</Link>
       <Link to="/quiz">Quiz</Link>
       {isLoggedIn && <Link to="/krishna-chat" className="krishna-chat-link">Ask Sastra</Link>}
+      {isLoggedIn && <Link to="/events">Events</Link>}
+      {isLoggedIn && <Link to="/games">Games</Link>}
       <Link to="/about">About Us</Link>
       {isLoggedIn ? (
         <>

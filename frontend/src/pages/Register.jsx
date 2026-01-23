@@ -7,6 +7,9 @@ const Register = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    folk: "",
+    folkGuide: "",
+    templeCenter: "",
     password: "",
     confirmPassword: ""
   });
@@ -58,7 +61,12 @@ const Register = () => {
       const response = await authAPI.register(
         formData.name,
         formData.email,
-        formData.password
+        formData.password,
+        {
+          folk: formData.folk,
+          folkGuide: formData.folkGuide,
+          templeCenter: formData.templeCenter
+        }
       );
 
       if (response.success) {
@@ -133,6 +141,45 @@ const Register = () => {
             <small style={{ color: '#666', fontSize: '12px' }}>
               Must be a valid email address
             </small>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="folk">Which folk are you from?</label>
+            <input
+              type="text"
+              id="folk"
+              name="folk"
+              value={formData.folk}
+              onChange={handleChange}
+              placeholder="e.g., ISKCON, Gaudiya Math, etc."
+              disabled={loading}
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="folkGuide">Who is your folk guide?</label>
+            <input
+              type="text"
+              id="folkGuide"
+              name="folkGuide"
+              value={formData.folkGuide}
+              onChange={handleChange}
+              placeholder="e.g., Mentor / Teacher name"
+              disabled={loading}
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="templeCenter">Temple / Center</label>
+            <input
+              type="text"
+              id="templeCenter"
+              name="templeCenter"
+              value={formData.templeCenter}
+              onChange={handleChange}
+              placeholder="e.g., Hyderabad, Mayapur, etc."
+              disabled={loading}
+            />
           </div>
 
           <div className="form-group">

@@ -21,6 +21,39 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Password is required'],
     minlength: [6, 'Password must be at least 6 characters long']
   },
+  communityProfile: {
+    folk: {
+      type: String,
+      trim: true,
+      default: ''
+    },
+    folkGuide: {
+      type: String,
+      trim: true,
+      default: ''
+    },
+    templeCenter: {
+      type: String,
+      trim: true,
+      default: ''
+    }
+  },
+  preferences: {
+    classRemindersEnabled: {
+      type: Boolean,
+      default: true
+    },
+    timezone: {
+      type: String,
+      trim: true,
+      default: 'Asia/Kolkata'
+    },
+    language: {
+      type: String,
+      trim: true,
+      default: 'en'
+    }
+  },
   spiritualData: {
     dailyRounds: {
       type: Number,
@@ -37,6 +70,24 @@ const userSchema = new mongoose.Schema({
     reminderTime: {
       type: String,
       default: '06:00'
+    }
+  },
+  games: {
+    krishnaWordSearch: {
+      bestScore: {
+        type: Number,
+        default: 0,
+        min: 0
+      },
+      bestTimeMs: {
+        type: Number,
+        default: null,
+        min: 0
+      },
+      lastPlayedAt: {
+        type: Date,
+        default: null
+      }
     }
   },
   journeyStartDate: {

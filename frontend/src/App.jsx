@@ -35,6 +35,8 @@ const Quiz = lazy(() => import("./pages/Quiz"));
 const Login = lazy(() => import("./pages/Login"));
 const Register = lazy(() => import("./pages/Register"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Events = lazy(() => import("./pages/Events"));
+const Games = lazy(() => import("./pages/Games"));
 const KrishnaChatbot = lazy(() => import("./pages/KrishnaChatbot"));
 const BookReader = lazy(() => import("./pages/BookReader"));
 const VedaBaseEmbed = lazy(() => import("./pages/VedaBaseEmbed"));
@@ -82,6 +84,8 @@ function App() {
             <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
             <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
             <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route path="/events" element={<ProtectedRoute><Events /></ProtectedRoute>} />
+            <Route path="/games" element={<ProtectedRoute><Games /></ProtectedRoute>} />
             <Route path="/krishna-chat" element={<ProtectedRoute><KrishnaChatbot /></ProtectedRoute>} />
             <Route path="/vedabase/:bookId" element={<VedaBaseEmbed />} />
             <Route path="/vedabase/:bookId/:chapterId" element={<VedaBaseEmbed />} />

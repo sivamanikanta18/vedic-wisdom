@@ -26,13 +26,13 @@ const handleResponse = async (response) => {
 
 // Auth API
 export const authAPI = {
-  register: async (name, email, password) => {
+  register: async (name, email, password, communityProfile) => {
     const response = await fetch(`${API_BASE_URL}/auth/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name, email, password }),
+      body: JSON.stringify({ name, email, password, communityProfile }),
     });
     return handleResponse(response);
   },
@@ -70,6 +70,143 @@ export const authAPI = {
     });
     return handleResponse(response);
   },
+
+  getAdminStatus: async () => {
+    const token = getAuthToken();
+    const response = await fetch(`${API_BASE_URL}/auth/admin-status`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    return handleResponse(response);
+  }
+};
+
+export const eventsAPI = {
+  list: async (from, to) => {
+    const token = getAuthToken();
+    const params = new URLSearchParams();
+    if (from) params.set('from', from);
+    if (to) params.set('to', to);
+    const qs = params.toString();
+    const response = await fetch(`${API_BASE_URL}/events${qs ? `?${qs}` : ''}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    return handleResponse(response);
+  },
+
+  getById: async (eventId) => {
+    const token = getAuthToken();
+    const response = await fetch(`${API_BASE_URL}/events/${eventId}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    return handleResponse(response);
+  },
+
+  create: async ({ title, description, location, startAt, endAt }) => {
+    const token = getAuthToken();
+    const response = await fetch(`${API_BASE_URL}/events`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ title, description, location, startAt, endAt })
+    });
+    return handleResponse(response);
+  },
+
+  update: async (eventId, updates) => {
+    const token = getAuthToken();
+    const response = await fetch(`${API_BASE_URL}/events/${eventId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(updates)
+    });
+    return handleResponse(response);
+  },
+
+  remove: async (eventId) => {
+    const token = getAuthToken();
+    const response = await fetch(`${API_BASE_URL}/events/${eventId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    return handleResponse(response);
+  },
+
+  rsvp: async (eventId, status) => {
+    const token = getAuthToken();
+    const response = await fetch(`${API_BASE_URL}/events/${eventId}/rsvp`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ status })
+    });
+    return handleResponse(response);
+  },
+
+  setAttendance: async (eventId, records) => {
+    const token = getAuthToken();
+    const response = await fetch(`${API_BASE_URL}/events/${eventId}/attendance`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ records })
+    });
+    return handleResponse(response);
+  }
+};
+
+export const gamesAPI = {
+  getKrishnaWordSearchStats: async () => {
+    const token = getAuthToken();
+    const response = await fetch(`${API_BASE_URL}/games/krishna-word-search`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    return handleResponse(response);
+  },
+
+  getKrishnaWordSearchPuzzle: async ({ count } = {}) => {
+    const token = getAuthToken();
+    const nonce = Date.now();
+    const qs = typeof count === 'number' ? `?count=${count}&nonce=${nonce}` : `?nonce=${nonce}`;
+    const response = await fetch(`${API_BASE_URL}/games/krishna-word-search/puzzle${qs}`, {
+      cache: 'no-store',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    return handleResponse(response);
+  },
+
+  submitKrishnaWordSearchResult: async ({ score, timeMs }) => {
+    const token = getAuthToken();
+    const response = await fetch(`${API_BASE_URL}/games/krishna-word-search`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ score, timeMs })
+    });
+    return handleResponse(response);
+  }
 };
 
 // Progress API

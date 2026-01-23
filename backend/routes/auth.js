@@ -5,10 +5,43 @@ import User from '../models/User.js';
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
 
+function parseAdminEmails() {
+  const raw = process.env.ADMIN_EMAILS || '';
+  return new Set(
+    raw
+      .split(',')
+      .map(s => s.trim().toLowerCase())
+      .filter(Boolean)
+  );
+}
+
+// Verify token middleware
+export const verifyToken = (req, res, next) => {
+  const token = req.headers.authorization?.split(' ')[1];
+
+  if (!token) {
+    return res.status(401).json({
+      success: false,
+      message: 'No token provided'
+    });
+  }
+
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    req.userId = decoded.userId;
+    next();
+  } catch {
+    return res.status(401).json({
+      success: false,
+      message: 'Invalid or expired token'
+    });
+  }
+};
+
 // Register new user
 router.post('/register', async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, communityProfile } = req.body;
 
     // Validate input
     if (!name || !email || !password) {
@@ -28,7 +61,18 @@ router.post('/register', async (req, res) => {
     }
 
     // Create new user
-    const user = new User({ name, email, password });
+    const safeCommunityProfile = {
+      folk: typeof communityProfile?.folk === 'string' ? communityProfile.folk.trim() : '',
+      folkGuide: typeof communityProfile?.folkGuide === 'string' ? communityProfile.folkGuide.trim() : '',
+      templeCenter: typeof communityProfile?.templeCenter === 'string' ? communityProfile.templeCenter.trim() : ''
+    };
+
+    const user = new User({
+      name,
+      email,
+      password,
+      communityProfile: safeCommunityProfile
+    });
     await user.save();
 
     // Generate JWT token
@@ -42,6 +86,8 @@ router.post('/register', async (req, res) => {
         id: user._id,
         name: user.name,
         email: user.email,
+        communityProfile: user.communityProfile,
+        preferences: user.preferences,
         spiritualData: user.spiritualData,
         journeyStartDate: user.journeyStartDate
       }
@@ -53,6 +99,24 @@ router.post('/register', async (req, res) => {
       message: 'Error registering user', 
       error: error.message 
     });
+  }
+});
+
+router.get('/admin-status', verifyToken, async (req, res) => {
+  try {
+    const adminEmails = parseAdminEmails();
+    if (adminEmails.size === 0) {
+      return res.json({ success: true, isAdmin: false, configured: false });
+    }
+
+    const user = await User.findById(req.userId).select('email').lean();
+    const email = (user?.email || '').toLowerCase();
+    const isAdmin = adminEmails.has(email);
+
+    return res.json({ success: true, isAdmin, configured: true });
+  } catch (error) {
+    console.error('Admin status error:', error);
+    return res.status(500).json({ success: false, message: 'Error checking admin status', error: error.message });
   }
 });
 
@@ -98,6 +162,8 @@ router.post('/login', async (req, res) => {
         id: user._id,
         name: user.name,
         email: user.email,
+        communityProfile: user.communityProfile,
+        preferences: user.preferences,
         spiritualData: user.spiritualData,
         journeyStartDate: user.journeyStartDate
       }
@@ -111,29 +177,6 @@ router.post('/login', async (req, res) => {
     });
   }
 });
-
-// Verify token middleware
-export const verifyToken = (req, res, next) => {
-  const token = req.headers.authorization?.split(' ')[1];
-
-  if (!token) {
-    return res.status(401).json({ 
-      success: false, 
-      message: 'No token provided' 
-    });
-  }
-
-  try {
-    const decoded = jwt.verify(token, JWT_SECRET);
-    req.userId = decoded.userId;
-    next();
-  } catch {
-    return res.status(401).json({ 
-      success: false, 
-      message: 'Invalid or expired token' 
-    });
-  }
-};
 
 // Get user profile
 router.get('/profile', verifyToken, async (req, res) => {
@@ -152,6 +195,8 @@ router.get('/profile', verifyToken, async (req, res) => {
         id: user._id,
         name: user.name,
         email: user.email,
+        communityProfile: user.communityProfile,
+        preferences: user.preferences,
         spiritualData: user.spiritualData,
         journeyStartDate: user.journeyStartDate
       }

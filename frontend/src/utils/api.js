@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://vedic-wisdom-eight.vercel.app/api';
 
 // Helper function to get auth token
 const getAuthToken = () => {

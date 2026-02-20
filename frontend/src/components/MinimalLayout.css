@@ -2,13 +2,10 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  height: 100vh;
 }
 
 .minimal-layout-header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: white;
   flex-shrink: 0;
 }
 
@@ -17,14 +14,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 2rem 1rem;
-  min-height: 300px;
+  padding: 1rem;
+  overflow-y: auto;
 }
 
 .minimal-layout-footer {
-  position: sticky;
-  bottom: 0;
-  z-index: 100;
-  background: white;
   flex-shrink: 0;
 }

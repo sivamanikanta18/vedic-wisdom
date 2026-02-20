@@ -56,10 +56,10 @@ function App() {
     <Router>
       <Suspense fallback={<div style={{ padding: "2rem", textAlign: "center" }}>Loading...</div>}>
         <Routes>
-          <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-          <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
           <Route element={<Layout />}>
             <Route path="/" element={<Navigate to={isAuthenticated() ? "/dashboard" : "/login"} replace />} />
+            <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+            <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
             <Route path="/home" element={<Home />} />
             <Route path="/scriptures" element={<Scriptures />} />
             <Route path="/essential-truths" element={<EssentialTruths />} />

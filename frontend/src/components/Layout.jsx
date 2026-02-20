@@ -4,13 +4,14 @@ import Header from "./Header";
 import Navbar from "./Navbar";
 import EventReminderBanner from "./EventReminderBanner";
 import Footer from "./Footer";
+import { isAuthenticated } from "../utils/api";
 
 const Layout = () => {
   return (
     <>
       <Header />
       <Navbar />
-      <EventReminderBanner />
+      {isAuthenticated() && <EventReminderBanner />}
       <Outlet />
       <Footer />
     </>

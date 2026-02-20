@@ -1,6 +1,7 @@
 import React, { Suspense, lazy, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./components/Layout";
+import MinimalLayout from "./components/MinimalLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
 import { startTimeTracking, stopTimeTracking } from "./utils/timeTracker";
@@ -56,10 +57,12 @@ function App() {
     <Router>
       <Suspense fallback={<div style={{ padding: "2rem", textAlign: "center" }}>Loading...</div>}>
         <Routes>
-          <Route element={<Layout />}>
-            <Route path="/" element={<Navigate to={isAuthenticated() ? "/dashboard" : "/login"} replace />} />
+          <Route element={<MinimalLayout />}>
             <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
             <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
+          </Route>
+          <Route element={<Layout />}>
+            <Route path="/" element={<Navigate to={isAuthenticated() ? "/dashboard" : "/login"} replace />} />
             <Route path="/home" element={<Home />} />
             <Route path="/scriptures" element={<Scriptures />} />
             <Route path="/essential-truths" element={<EssentialTruths />} />

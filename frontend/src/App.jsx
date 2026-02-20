@@ -1,9 +1,10 @@
 import React, { Suspense, lazy, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./components/Layout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
 import { startTimeTracking, stopTimeTracking } from "./utils/timeTracker";
+import { isAuthenticated } from "./utils/api";
 
 // Lazy load all pages
 const Home = lazy(() => import("./pages/Home"));
@@ -56,7 +57,7 @@ function App() {
       <Suspense fallback={<div style={{ padding: "2rem", textAlign: "center" }}>Loading...</div>}>
         <Routes>
           <Route element={<Layout />}>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Navigate to={isAuthenticated() ? "/dashboard" : "/login"} replace />} />
             <Route path="/scriptures" element={<Scriptures />} />
             <Route path="/essential-truths" element={<EssentialTruths />} />
             <Route path="/essential-truths/who-am-i" element={<WhoAmI />} />

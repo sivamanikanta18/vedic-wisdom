@@ -56,6 +56,8 @@ function App() {
     <Router>
       <Suspense fallback={<div style={{ padding: "2rem", textAlign: "center" }}>Loading...</div>}>
         <Routes>
+          <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+          <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
           <Route element={<Layout />}>
             <Route path="/" element={<Navigate to={isAuthenticated() ? "/dashboard" : "/login"} replace />} />
             <Route path="/scriptures" element={<Scriptures />} />
@@ -82,8 +84,6 @@ function App() {
             <Route path="/chanting" element={<Chanting />} />
             <Route path="/quiz" element={<Quiz />} />
             <Route path="/about" element={<About />} />
-            <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-            <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
             <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/events" element={<ProtectedRoute><Events /></ProtectedRoute>} />
             <Route path="/games" element={<ProtectedRoute><Games /></ProtectedRoute>} />

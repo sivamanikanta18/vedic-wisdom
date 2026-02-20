@@ -38,7 +38,7 @@ function Navbar() {
 
   return (
     <nav className="navbar">
-      <Link to="/">Home</Link>
+      <Link to="/home">Home</Link>
       <Link to="/scriptures">Scriptures</Link>
       <Link to="/essential-truths">Essential Truths</Link>
       <Link to="/chanting">Chanting</Link>

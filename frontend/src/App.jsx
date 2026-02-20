@@ -60,6 +60,7 @@ function App() {
           <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
           <Route element={<Layout />}>
             <Route path="/" element={<Navigate to={isAuthenticated() ? "/dashboard" : "/login"} replace />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/scriptures" element={<Scriptures />} />
             <Route path="/essential-truths" element={<EssentialTruths />} />
             <Route path="/essential-truths/who-am-i" element={<WhoAmI />} />

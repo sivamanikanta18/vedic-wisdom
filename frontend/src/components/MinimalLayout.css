@@ -27,3 +27,25 @@
 .minimal-layout-footer {
   flex-shrink: 0;
 }
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .minimal-layout-content {
+    padding: 1rem;
+  }
+  
+  .minimal-layout-content > * {
+    max-width: 100%;
+    padding: 0 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .minimal-layout-content {
+    padding: 0.5rem;
+  }
+  
+  .minimal-layout-content > * {
+    padding: 0;
+  }
+}

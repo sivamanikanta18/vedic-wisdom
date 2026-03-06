@@ -63,37 +63,37 @@ function App() {
           </Route>
           <Route element={<Layout />}>
             <Route path="/" element={<Navigate to={isAuthenticated() ? "/dashboard" : "/login"} replace />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/scriptures" element={<Scriptures />} />
-            <Route path="/essential-truths" element={<EssentialTruths />} />
-            <Route path="/essential-truths/who-am-i" element={<WhoAmI />} />
-            <Route path="/essential-truths/what-is-our-purpose" element={<WhatIsOurPurpose />} />
-            <Route path="/essential-truths/what-is-karma" element={<WhatIsKarma />} />
-            <Route path="/essential-truths/what-is-reincarnation" element={<WhatIsReincarnation />} />
-            <Route path="/essential-truths/overcome-fear" element={<HowToOvercomeFear />} />
-            <Route path="/essential-truths/overcome-anger" element={<HowToOvercomeAnger />} />
-            <Route path="/essential-truths/why-bad-happens" element={<WhyBadHappensToGoodPeople />} />
-            <Route path="/essential-truths/manage-time" element={<ManageTime />} />
-            <Route path="/essential-truths/overcome-stress" element={<HowToOvercomeStress />} />
-            <Route path="/essential-truths/yoga-modern-age" element={<YogaModernAge />} />
-            <Route path="/essential-truths/real-happiness" element={<WhatIsRealHappiness />} />
-            <Route path="/human-origin" element={<HumanOrigin />} />
-            <Route path="/essential-truths/six-opulences" element={<SixOpulences />} />
-            <Route path="/essential-truths/regulative-principles" element={<RegulativePrinciples />} />
-            <Route path="/essential-truths/abcde-bhakti" element={<AbcdeBhakti />} />
-            <Route path="/essential-truths/pure-love" element={<PureLove />} />
-            <Route path="/essential-truths/84-lakh-species" element={<EightyFourLakhSpecies />} />
-            <Route path="/essential-truths/maya-and-material-world" element={<MayaAndMaterialWorld />} />
-            <Route path="/essential-truths/control-lust" element={<ControlLust />} />
-            <Route path="/chanting" element={<Chanting />} />
-            <Route path="/quiz" element={<Quiz />} />
-            <Route path="/about" element={<About />} />
+            <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+            <Route path="/scriptures" element={<ProtectedRoute><Scriptures /></ProtectedRoute>} />
+            <Route path="/essential-truths" element={<ProtectedRoute><EssentialTruths /></ProtectedRoute>} />
+            <Route path="/essential-truths/who-am-i" element={<ProtectedRoute><WhoAmI /></ProtectedRoute>} />
+            <Route path="/essential-truths/what-is-our-purpose" element={<ProtectedRoute><WhatIsOurPurpose /></ProtectedRoute>} />
+            <Route path="/essential-truths/what-is-karma" element={<ProtectedRoute><WhatIsKarma /></ProtectedRoute>} />
+            <Route path="/essential-truths/what-is-reincarnation" element={<ProtectedRoute><WhatIsReincarnation /></ProtectedRoute>} />
+            <Route path="/essential-truths/overcome-fear" element={<ProtectedRoute><HowToOvercomeFear /></ProtectedRoute>} />
+            <Route path="/essential-truths/overcome-anger" element={<ProtectedRoute><HowToOvercomeAnger /></ProtectedRoute>} />
+            <Route path="/essential-truths/why-bad-happens" element={<ProtectedRoute><WhyBadHappensToGoodPeople /></ProtectedRoute>} />
+            <Route path="/essential-truths/manage-time" element={<ProtectedRoute><ManageTime /></ProtectedRoute>} />
+            <Route path="/essential-truths/overcome-stress" element={<ProtectedRoute><HowToOvercomeStress /></ProtectedRoute>} />
+            <Route path="/essential-truths/yoga-modern-age" element={<ProtectedRoute><YogaModernAge /></ProtectedRoute>} />
+            <Route path="/essential-truths/real-happiness" element={<ProtectedRoute><WhatIsRealHappiness /></ProtectedRoute>} />
+            <Route path="/human-origin" element={<ProtectedRoute><HumanOrigin /></ProtectedRoute>} />
+            <Route path="/essential-truths/six-opulences" element={<ProtectedRoute><SixOpulences /></ProtectedRoute>} />
+            <Route path="/essential-truths/regulative-principles" element={<ProtectedRoute><RegulativePrinciples /></ProtectedRoute>} />
+            <Route path="/essential-truths/abcde-bhakti" element={<ProtectedRoute><AbcdeBhakti /></ProtectedRoute>} />
+            <Route path="/essential-truths/pure-love" element={<ProtectedRoute><PureLove /></ProtectedRoute>} />
+            <Route path="/essential-truths/84-lakh-species" element={<ProtectedRoute><EightyFourLakhSpecies /></ProtectedRoute>} />
+            <Route path="/essential-truths/maya-and-material-world" element={<ProtectedRoute><MayaAndMaterialWorld /></ProtectedRoute>} />
+            <Route path="/essential-truths/control-lust" element={<ProtectedRoute><ControlLust /></ProtectedRoute>} />
+            <Route path="/chanting" element={<ProtectedRoute><Chanting /></ProtectedRoute>} />
+            <Route path="/quiz" element={<ProtectedRoute><Quiz /></ProtectedRoute>} />
+            <Route path="/about" element={<ProtectedRoute><About /></ProtectedRoute>} />
             <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/events" element={<ProtectedRoute><Events /></ProtectedRoute>} />
             <Route path="/games" element={<ProtectedRoute><Games /></ProtectedRoute>} />
             <Route path="/krishna-chat" element={<ProtectedRoute><KrishnaChatbot /></ProtectedRoute>} />
-            <Route path="/vedabase/:bookId" element={<VedaBaseEmbed />} />
-            <Route path="/vedabase/:bookId/:chapterId" element={<VedaBaseEmbed />} />
+            <Route path="/vedabase/:bookId" element={<ProtectedRoute><VedaBaseEmbed /></ProtectedRoute>} />
+            <Route path="/vedabase/:bookId/:chapterId" element={<ProtectedRoute><VedaBaseEmbed /></ProtectedRoute>} />
           </Route>
         </Routes>
       </Suspense>

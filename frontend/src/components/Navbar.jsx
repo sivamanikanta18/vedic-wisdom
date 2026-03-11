@@ -48,35 +48,50 @@ function Navbar() {
   return (
     <>
       <nav className="navbar">
+        <div className="navbar-brand">
+          <Link to="/home" className="navbar-title">Vedic Wisdom</Link>
+        </div>
         <button 
           className="mobile-menu-btn" 
           onClick={toggleMobileMenu}
           aria-label="Toggle menu"
         >
-          ☰
+          {isMobileMenuOpen ? '✕' : '☰'}
         </button>
         
-        <Link to="/home">Home</Link>
-        <Link to="/scriptures">Scriptures</Link>
-        <Link to="/essential-truths">Essential Truths</Link>
-        <Link to="/chanting">Chanting</Link>
-        <Link to="/quiz">Quiz</Link>
-        {isLoggedIn && <Link to="/krishna-chat" className="krishna-chat-link">Ask Sastra</Link>}
-        {isLoggedIn && <Link to="/events">Events</Link>}
-        {isLoggedIn && <Link to="/games">Games</Link>}
-        <Link to="/about">About Us</Link>
-        {isLoggedIn ? (
-          <>
-            <Link to="/dashboard" className="dashboard-link">📊 Dashboard</Link>
-            <button onClick={handleLogout} className="logout-btn">Logout</button>
-          </>
-        ) : (
-          <Link to="/login" className="login-link">Login</Link>
-        )}
+        <div className="navbar-links">
+          <Link to="/home">Home</Link>
+          <Link to="/scriptures">Scriptures</Link>
+          <Link to="/essential-truths">Essential Truths</Link>
+          <Link to="/chanting">Chanting</Link>
+          <Link to="/quiz">Quiz</Link>
+          {isLoggedIn && <Link to="/krishna-chat" className="krishna-chat-link">Ask Sastra</Link>}
+          {isLoggedIn && <Link to="/events">Events</Link>}
+          {isLoggedIn && <Link to="/games">Games</Link>}
+          <Link to="/about">About Us</Link>
+          {isLoggedIn ? (
+            <>
+              <Link to="/dashboard" className="dashboard-link">📊 Dashboard</Link>
+              <button onClick={handleLogout} className="logout-btn">Logout</button>
+            </>
+          ) : (
+            <Link to="/login" className="login-link">Login</Link>
+          )}
+        </div>
       </nav>
 
       {/* Mobile Menu */}
       <div className={`mobile-menu ${isMobileMenuOpen ? 'active' : ''}`}>
+        <div className="mobile-menu-header">
+          <span className="mobile-menu-title">Vedic Wisdom</span>
+          <button 
+            className="mobile-menu-close" 
+            onClick={closeMobileMenu}
+            aria-label="Close menu"
+          >
+            ✕
+          </button>
+        </div>
         <Link to="/home" onClick={closeMobileMenu}>Home</Link>
         <Link to="/scriptures" onClick={closeMobileMenu}>Scriptures</Link>
         <Link to="/essential-truths" onClick={closeMobileMenu}>Essential Truths</Link>

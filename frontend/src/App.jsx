@@ -43,6 +43,20 @@ const KrishnaChatbot = lazy(() => import("./pages/KrishnaChatbot"));
 const BookReader = lazy(() => import("./pages/BookReader"));
 const VedaBaseEmbed = lazy(() => import("./pages/VedaBaseEmbed"));
 
+// HKM Temple Management Pages
+const Temples = lazy(() => import("./pages/Temples"));
+const TempleDetail = lazy(() => import("./pages/TempleDetail"));
+const Colleges = lazy(() => import("./pages/Colleges"));
+const CollegeDetail = lazy(() => import("./pages/CollegeDetail"));
+const SocialFeed = lazy(() => import("./pages/SocialFeed"));
+const AkshayaPatra = lazy(() => import("./pages/AkshayaPatra"));
+
+// Admin Pages
+const AdminUsers = lazy(() => import("./pages/AdminUsers"));
+
+// Guide Pages
+const GuideStudents = lazy(() => import("./pages/GuideStudents"));
+
 function App() {
   // Start global time tracking when app mounts
   useEffect(() => {
@@ -94,6 +108,17 @@ function App() {
             <Route path="/krishna-chat" element={<ProtectedRoute><KrishnaChatbot /></ProtectedRoute>} />
             <Route path="/vedabase/:bookId" element={<ProtectedRoute><VedaBaseEmbed /></ProtectedRoute>} />
             <Route path="/vedabase/:bookId/:chapterId" element={<ProtectedRoute><VedaBaseEmbed /></ProtectedRoute>} />
+            {/* HKM Temple Management Routes */}
+            <Route path="/temples" element={<ProtectedRoute><Temples /></ProtectedRoute>} />
+            <Route path="/temples/:id" element={<ProtectedRoute><TempleDetail /></ProtectedRoute>} />
+            <Route path="/colleges" element={<ProtectedRoute><Colleges /></ProtectedRoute>} />
+            <Route path="/colleges/:id" element={<ProtectedRoute><CollegeDetail /></ProtectedRoute>} />
+            <Route path="/community" element={<ProtectedRoute><SocialFeed /></ProtectedRoute>} />
+            <Route path="/akshaya-patra" element={<ProtectedRoute><AkshayaPatra /></ProtectedRoute>} />
+            {/* Admin Routes */}
+            <Route path="/admin/users" element={<ProtectedRoute><AdminUsers /></ProtectedRoute>} />
+            {/* Guide Routes */}
+            <Route path="/guide/students" element={<ProtectedRoute><GuideStudents /></ProtectedRoute>} />
           </Route>
         </Routes>
       </Suspense>

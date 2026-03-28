@@ -37,13 +37,13 @@ export const authAPI = {
     return handleResponse(response);
   },
 
-  login: async (email, password) => {
+  login: async (email, password, userType) => {
     const response = await fetch(`${API_BASE_URL}/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email, password, userType }),
     });
     return handleResponse(response);
   },
@@ -263,6 +263,116 @@ export const isAuthenticated = () => {
   return !!getAuthToken();
 };
 
+// HKM Temple Management APIs
+export const templesAPI = {
+  getAll: async (filters = {}) => {
+    const query = new URLSearchParams(filters).toString();
+    const response = await fetch(`${API_BASE_URL}/temples?${query}`);
+    return handleResponse(response);
+  },
+
+  getById: async (id) => {
+    const response = await fetch(`${API_BASE_URL}/temples/${id}`);
+    return handleResponse(response);
+  },
+
+  getDevotees: async (id, page = 1) => {
+    const response = await fetch(`${API_BASE_URL}/temples/${id}/devotees?page=${page}`);
+    return handleResponse(response);
+  },
+
+  getStatistics: async (id) => {
+    const response = await fetch(`${API_BASE_URL}/temples/${id}/statistics`);
+    return handleResponse(response);
+  }
+};
+
+export const collegesAPI = {
+  getAll: async (filters = {}) => {
+    const query = new URLSearchParams(filters).toString();
+    const response = await fetch(`${API_BASE_URL}/colleges?${query}`);
+    return handleResponse(response);
+  },
+
+  getById: async (id) => {
+    const response = await fetch(`${API_BASE_URL}/colleges/${id}`);
+    return handleResponse(response);
+  },
+
+  getStudents: async (id) => {
+    const response = await fetch(`${API_BASE_URL}/colleges/${id}/students`);
+    return handleResponse(response);
+  }
+};
+
+export const postsAPI = {
+  getAll: async (page = 1, filters = {}) => {
+    const query = new URLSearchParams({ page, ...filters }).toString();
+    const response = await fetch(`${API_BASE_URL}/posts?${query}`);
+    return handleResponse(response);
+  },
+
+  create: async (data) => {
+    const token = getAuthToken();
+    const response = await fetch(`${API_BASE_URL}/posts`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(data)
+    });
+    return handleResponse(response);
+  },
+
+  like: async (id) => {
+    const token = getAuthToken();
+    const response = await fetch(`${API_BASE_URL}/posts/${id}/like`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    return handleResponse(response);
+  },
+
+  addComment: async (id, content) => {
+    const token = getAuthToken();
+    const response = await fetch(`${API_BASE_URL}/posts/${id}/comments`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ content })
+    });
+    return handleResponse(response);
+  }
+};
+
+export const kitchensAPI = {
+  getAll: async (filters = {}) => {
+    const query = new URLSearchParams(filters).toString();
+    const response = await fetch(`${API_BASE_URL}/kitchens?${query}`);
+    return handleResponse(response);
+  },
+
+  getById: async (id) => {
+    const response = await fetch(`${API_BASE_URL}/kitchens/${id}`);
+    return handleResponse(response);
+  },
+
+  getStatistics: async (id) => {
+    const response = await fetch(`${API_BASE_URL}/kitchens/${id}/statistics`);
+    return handleResponse(response);
+  },
+
+  getDistribution: async (id, page = 1) => {
+    const response = await fetch(`${API_BASE_URL}/kitchens/${id}/distribution?page=${page}`);
+    return handleResponse(response);
+  }
+};
+
 // Logout helper
 export const logout = () => {
   localStorage.removeItem('authToken');
@@ -271,4 +381,30 @@ export const logout = () => {
   
   // Dispatch custom event to notify all components
   window.dispatchEvent(new Event('logout'));
+};
+
+// Admin API
+export const adminAPI = {
+  getUsers: async () => {
+    const token = getAuthToken();
+    const response = await fetch(`${API_BASE_URL}/admin/users`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    return handleResponse(response);
+  },
+
+  updateUserRole: async (userId, userType) => {
+    const token = getAuthToken();
+    const response = await fetch(`${API_BASE_URL}/admin/users/${userId}/role`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ userType })
+    });
+    return handleResponse(response);
+  }
 };

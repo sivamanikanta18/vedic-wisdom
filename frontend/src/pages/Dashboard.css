@@ -435,6 +435,323 @@
   box-shadow: var(--shadow-soft);
 }
 
+/* Professional HKM Identity Card */
+.hkm-identity-card {
+  background: linear-gradient(135deg, #fff 0%, var(--cream) 100%);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-md);
+  border: 2px solid var(--gold-light);
+  position: relative;
+  overflow: hidden;
+}
+
+.hkm-identity-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-gold);
+}
+
+.identity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.role-badge {
+  padding: 0.6rem 1.25rem;
+  border-radius: 30px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: var(--gold-light);
+  color: var(--deep-maroon);
+  border: 2px solid var(--gold-primary);
+}
+
+.role-badge.role-senior {
+  background: linear-gradient(135deg, #6a1b9a, #9c27b0);
+  color: white;
+  border-color: #6a1b9a;
+}
+
+.role-badge.role-brahmachari {
+  background: linear-gradient(135deg, #ff9800, #ffc107);
+  color: white;
+  border-color: #ff9800;
+}
+
+.role-badge.role-folk {
+  background: linear-gradient(135deg, #2196f3, #03a9f4);
+  color: white;
+  border-color: #2196f3;
+}
+
+.role-badge.role-guide {
+  background: linear-gradient(135deg, #4caf50, #8bc34a);
+  color: white;
+  border-color: #4caf50;
+}
+
+.role-badge.role-grhastha {
+  background: linear-gradient(135deg, #f44336, #ff5722);
+  color: white;
+  border-color: #f44336;
+}
+
+.spiritual-name-header {
+  text-align: right;
+}
+
+.user-basic-info {
+  flex: 1;
+  text-align: center;
+}
+
+.user-name {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--deep-maroon);
+  margin: 0;
+  font-family: var(--font-heading);
+}
+
+.user-email {
+  font-size: 1rem;
+  color: var(--charcoal);
+  opacity: 0.8;
+  margin: 0.25rem 0 0 0;
+}
+
+.spiritual-label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--light-text);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.25rem;
+}
+
+.spiritual-value {
+  display: block;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--deep-maroon);
+  font-family: 'Georgia', serif;
+  font-style: italic;
+}
+
+.identity-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.identity-main {
+  flex: 1;
+  min-width: 250px;
+}
+
+.initiation-status {
+  margin-bottom: 1rem;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  background: var(--soft-gray);
+  color: var(--charcoal);
+}
+
+.status-badge.none {
+  background: #f5f5f5;
+  color: #757575;
+}
+
+.status-badge.first {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-badge.second {
+  background: #fff3e0;
+  color: #ef6c00;
+}
+
+.temple-affiliation,
+.college-affiliation {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--soft-gray);
+}
+
+.affiliation-icon {
+  font-size: 1.5rem;
+}
+
+.affiliation-text {
+  font-weight: 600;
+  color: var(--deep-maroon);
+  flex: 1;
+}
+
+.view-link {
+  font-size: 0.85rem;
+  color: var(--gold-dark);
+  text-decoration: none;
+  padding: 0.25rem 0.75rem;
+  border-radius: 15px;
+  background: var(--gold-light);
+}
+
+.view-link:hover {
+  background: var(--gold-primary);
+  color: white;
+}
+
+.identity-stats {
+  display: flex;
+  gap: 2rem;
+}
+
+.id-stat {
+  text-align: center;
+}
+
+.id-stat-value {
+  display: block;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--deep-maroon);
+  line-height: 1;
+}
+
+.id-stat-label {
+  font-size: 0.8rem;
+  color: var(--light-text);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 0.25rem;
+}
+
+/* Role-Based Quick Actions */
+.role-actions-section {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gold-light);
+}
+
+.role-actions-section h3 {
+  font-size: 1.25rem;
+  color: var(--deep-maroon);
+  margin-bottom: 1.25rem;
+  text-align: center;
+}
+
+.role-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.role-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  background: linear-gradient(135deg, var(--cream), white);
+  border: 1.5px solid var(--gold-light);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: var(--charcoal);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.role-action-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--gold-primary);
+}
+
+.role-action-btn.highlight {
+  background: linear-gradient(135deg, var(--gold-primary), var(--gold-accent));
+  color: white;
+  border-color: var(--gold-primary);
+}
+
+.role-action-btn.info {
+  background: linear-gradient(135deg, #e3f2fd, white);
+  border-color: #2196f3;
+  cursor: default;
+}
+
+.role-action-btn.admin {
+  background: linear-gradient(135deg, #fce4ec, white);
+  border-color: #e91e63;
+}
+
+.action-icon {
+  font-size: 1.5rem;
+}
+
+.action-text {
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+/* Responsive for Identity Card */
+@media (max-width: 768px) {
+  .hkm-identity-card {
+    padding: 1.5rem;
+  }
+  
+  .identity-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .spiritual-name-header {
+    text-align: center;
+  }
+  
+  .identity-body {
+    flex-direction: column;
+  }
+  
+  .identity-stats {
+    width: 100%;
+    justify-content: space-around;
+    border-top: 1px solid var(--soft-gray);
+    padding-top: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .role-actions-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .dashboard-page {

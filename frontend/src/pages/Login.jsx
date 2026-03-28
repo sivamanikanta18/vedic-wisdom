@@ -6,7 +6,8 @@ import "./Login.css";
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
-    password: ""
+    password: "",
+    userType: "folk_boy"
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -43,7 +44,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await authAPI.login(formData.email, formData.password);
+      const response = await authAPI.login(formData.email, formData.password, formData.userType);
 
       if (response.success) {
         // Save token and user data
@@ -123,12 +124,28 @@ const Login = () => {
             />
           </div>
 
+          <div className="form-group">
+            <label htmlFor="userType">Select Role</label>
+            <select
+              id="userType"
+              name="userType"
+              value={formData.userType}
+              onChange={handleChange}
+              disabled={loading}
+              className="user-type-select"
+            >
+              <option value="folk_boy">Folk Boy</option>
+              <option value="folk_guide">Folk Guide</option>
+              <option value="admin">Administrator</option>
+            </select>
+          </div>
+
           <button 
             type="submit" 
             className="login-button"
             disabled={loading}
           >
-            {loading ? "Logging in..." : "Login 🕉️"}
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 

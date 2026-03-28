@@ -68,25 +68,25 @@
   box-shadow: var(--shadow-glow);
 }
 
-/* Section Styling */
+/* Section Styling - Compact */
 .scripture-section {
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
 }
 
 .section-title {
-  font-size: 2.2rem;
+  font-size: 1.8rem;
   color: var(--deep-maroon);
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
   border-bottom: 3px solid var(--gold-primary);
   font-family: var(--font-heading);
 }
 
-/* Book Grid */
+/* Book Grid - Smaller cards for less scrolling */
 .scripture-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
 }
 
 /* Book Card */

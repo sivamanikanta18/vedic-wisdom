@@ -71,6 +71,7 @@ router.post('/register', async (req, res) => {
       name,
       email,
       password,
+      userType: 'folk_boy', // Default role for new registrations
       communityProfile: safeCommunityProfile
     });
     await user.save();
@@ -86,6 +87,7 @@ router.post('/register', async (req, res) => {
         id: user._id,
         name: user.name,
         email: user.email,
+        userType: user.userType,
         communityProfile: user.communityProfile,
         preferences: user.preferences,
         spiritualData: user.spiritualData,
@@ -123,7 +125,7 @@ router.get('/admin-status', verifyToken, async (req, res) => {
 // Login user
 router.post('/login', async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, userType } = req.body;
 
     // Validate input
     if (!email || !password) {
@@ -151,6 +153,15 @@ router.post('/login', async (req, res) => {
       });
     }
 
+    // Update user role if different from selected
+    if (userType && ['folk_boy', 'folk_guide', 'admin'].includes(userType)) {
+      if (user.userType !== userType) {
+        user.userType = userType;
+        await user.save();
+        console.log(`User ${email} switched role to ${userType}`);
+      }
+    }
+
     // Generate JWT token
     const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '30d' });
 
@@ -165,7 +176,19 @@ router.post('/login', async (req, res) => {
         communityProfile: user.communityProfile,
         preferences: user.preferences,
         spiritualData: user.spiritualData,
-        journeyStartDate: user.journeyStartDate
+        journeyStartDate: user.journeyStartDate,
+        // HKM Fields
+        userType: user.userType,
+        initiationStatus: user.initiationStatus,
+        spiritualName: user.spiritualName,
+        serviceRoles: user.serviceRoles,
+        temple: user.temple,
+        college: user.college,
+        assignedGuide: user.assignedGuide,
+        students: user.students,
+        joinDate: user.joinDate,
+        isGuide: user.isGuide,
+        isActive: user.isActive
       }
     });
   } catch (error) {
@@ -198,7 +221,19 @@ router.get('/profile', verifyToken, async (req, res) => {
         communityProfile: user.communityProfile,
         preferences: user.preferences,
         spiritualData: user.spiritualData,
-        journeyStartDate: user.journeyStartDate
+        journeyStartDate: user.journeyStartDate,
+        // HKM Fields
+        userType: user.userType,
+        initiationStatus: user.initiationStatus,
+        spiritualName: user.spiritualName,
+        serviceRoles: user.serviceRoles,
+        temple: user.temple,
+        college: user.college,
+        assignedGuide: user.assignedGuide,
+        students: user.students,
+        joinDate: user.joinDate,
+        isGuide: user.isGuide,
+        isActive: user.isActive
       }
     });
   } catch (error) {

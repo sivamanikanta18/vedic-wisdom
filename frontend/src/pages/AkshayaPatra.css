@@ -1,0 +1,299 @@
+/* Akshaya Patra Page Styling */
+.akshaya-patra-page {
+  padding: 2rem 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Header */
+.ap-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.ap-header h1 {
+  font-size: 2rem;
+  background: var(--gradient-spiritual);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.ap-header .subtitle {
+  color: var(--light-text);
+  font-size: 1.1rem;
+}
+
+/* Kitchen Selector */
+.kitchen-selector {
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gold-light);
+}
+
+.kitchen-selector label {
+  display: block;
+  font-weight: 600;
+  color: var(--deep-maroon);
+  margin-bottom: 0.75rem;
+}
+
+.kitchen-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.kitchen-buttons button {
+  padding: 0.6rem 1rem;
+  background: var(--cream);
+  border: 1.5px solid var(--gold-light);
+  border-radius: var(--radius-sm);
+  color: var(--charcoal);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.kitchen-buttons button:hover {
+  background: var(--gold-light);
+  border-color: var(--gold-primary);
+}
+
+.kitchen-buttons button.active {
+  background: var(--gradient-gold);
+  color: white;
+  border-color: var(--gold-primary);
+}
+
+/* Stats Overview */
+.stats-overview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card-large {
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gold-light);
+  transition: all 0.25s ease;
+}
+
+.stat-card-large:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.stat-icon {
+  font-size: 2.5rem;
+}
+
+.stat-content {
+  flex: 1;
+}
+
+.stat-number-large {
+  display: block;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--deep-maroon);
+  line-height: 1;
+}
+
+.stat-label-large {
+  font-size: 0.85rem;
+  color: var(--light-text);
+}
+
+/* Kitchen Details */
+.kitchen-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.detail-section {
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gold-light);
+}
+
+.detail-section h3 {
+  font-size: 1.1rem;
+  color: var(--deep-maroon);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--gold-light);
+}
+
+.info-grid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--soft-gray);
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.info-item .label {
+  color: var(--light-text);
+  font-weight: 500;
+}
+
+.info-item .value {
+  color: var(--charcoal);
+  font-weight: 600;
+}
+
+.temple-link {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--gold-light);
+}
+
+.temple-link span {
+  color: var(--light-text);
+  margin-right: 0.5rem;
+}
+
+.temple-link a {
+  color: var(--gold-dark);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.temple-link a:hover {
+  text-decoration: underline;
+}
+
+.contact-grid p {
+  margin: 0.5rem 0;
+  color: var(--charcoal);
+}
+
+/* Impact Section */
+.impact-section {
+  background: linear-gradient(135deg, var(--cream), white);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  border: 2px solid var(--gold-light);
+  text-align: center;
+}
+
+.impact-section h3 {
+  font-size: 1.35rem;
+  color: var(--deep-maroon);
+  margin-bottom: 1rem;
+}
+
+.impact-section p {
+  color: var(--charcoal);
+  line-height: 1.8;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Loading & Error */
+.loading-container,
+.no-data {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--light-text);
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid var(--gold-light);
+  border-top: 4px solid var(--gold-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error-message {
+  background: #fee;
+  color: #c33;
+  padding: 1rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .akshaya-patra-page {
+    padding: 1.5rem 1rem;
+  }
+  
+  .ap-header h1 {
+    font-size: 1.6rem;
+  }
+  
+  .stats-overview {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .stat-card-large {
+    padding: 1.25rem;
+  }
+  
+  .stat-icon {
+    font-size: 2rem;
+  }
+  
+  .stat-number-large {
+    font-size: 1.5rem;
+  }
+  
+  .kitchen-buttons {
+    justify-content: center;
+  }
+  
+  .kitchen-buttons button {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-overview {
+    grid-template-columns: 1fr;
+  }
+  
+  .impact-section {
+    padding: 1.5rem;
+  }
+}

@@ -1,0 +1,359 @@
+/* Temple Detail Page Styling */
+.temple-detail-page {
+  padding: 2rem 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Header */
+.temple-header {
+  margin-bottom: 1.5rem;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  color: var(--gold-dark);
+  text-decoration: none;
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+  transition: color 0.25s ease;
+}
+
+.back-link:hover {
+  color: var(--sacred-orange);
+}
+
+.temple-header h1 {
+  font-size: 2rem;
+  background: var(--gradient-spiritual);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.location {
+  color: var(--light-text);
+  font-size: 1.1rem;
+}
+
+/* Tabs */
+.temple-tabs {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 2px solid var(--gold-light);
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.temple-tabs button {
+  padding: 0.75rem 1.25rem;
+  background: transparent;
+  border: none;
+  color: var(--light-text);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+}
+
+.temple-tabs button:hover {
+  color: var(--gold-dark);
+}
+
+.temple-tabs button.active {
+  color: var(--deep-maroon);
+  border-bottom-color: var(--gold-primary);
+}
+
+/* Tab Content */
+.tab-content {
+  min-height: 300px;
+}
+
+.section {
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gold-light);
+}
+
+.section h3 {
+  font-size: 1.15rem;
+  color: var(--deep-maroon);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--gold-light);
+}
+
+/* Overview Tab */
+.contact-grid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--charcoal);
+}
+
+.contact-item span:first-child {
+  font-size: 1.1rem;
+}
+
+.contact-item a {
+  color: var(--gold-dark);
+  text-decoration: none;
+}
+
+.contact-item a:hover {
+  text-decoration: underline;
+}
+
+/* Statistics Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, var(--cream), white);
+  border-radius: var(--radius-sm);
+  padding: 1.25rem;
+  text-align: center;
+  border: 1px solid var(--gold-light);
+}
+
+.stat-number {
+  display: block;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--deep-maroon);
+  margin-bottom: 0.25rem;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--light-text);
+}
+
+/* Programs Tab */
+.programs-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.program-card {
+  background: white;
+  border-radius: var(--radius-sm);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gold-light);
+}
+
+.program-card h4 {
+  color: var(--deep-maroon);
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.program-card .schedule {
+  color: var(--gold-dark);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.program-card .description {
+  color: var(--light-text);
+  font-size: 0.95rem;
+}
+
+/* Devotees Tab */
+.devotees-table-container {
+  overflow-x: auto;
+}
+
+.devotees-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.devotees-table th,
+.devotees-table td {
+  padding: 0.875rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--soft-gray);
+}
+
+.devotees-table th {
+  background: var(--cream);
+  color: var(--deep-maroon);
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.devotees-table tr:hover {
+  background: var(--warm-white);
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.badge.none {
+  background: var(--soft-gray);
+  color: var(--charcoal);
+}
+
+.badge.first {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.badge.second {
+  background: #fff3e0;
+  color: #ef6c00;
+}
+
+/* Leadership Tab */
+.leadership-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.25rem;
+}
+
+.leader-card {
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gold-light);
+}
+
+.leader-avatar {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, var(--gold-light), white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  margin: 0 auto 1rem;
+}
+
+.leader-card h4 {
+  color: var(--deep-maroon);
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+}
+
+.leader-card .role {
+  color: var(--gold-dark);
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+
+.leader-card .contact {
+  color: var(--light-text);
+  font-size: 0.85rem;
+  margin: 0.25rem 0;
+}
+
+/* No Data */
+.no-data {
+  text-align: center;
+  color: var(--light-text);
+  padding: 3rem;
+  font-style: italic;
+}
+
+/* Loading & Error */
+.loading-container,
+.error-container {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid var(--gold-light);
+  border-top: 4px solid var(--gold-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.back-btn {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--gradient-gold);
+  color: white;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .temple-detail-page {
+    padding: 1.5rem 1rem;
+  }
+  
+  .temple-header h1 {
+    font-size: 1.6rem;
+  }
+  
+  .temple-tabs button {
+    padding: 0.6rem 0.875rem;
+    font-size: 0.85rem;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .section {
+    padding: 1.25rem;
+  }
+  
+  .devotees-table {
+    font-size: 0.85rem;
+  }
+  
+  .devotees-table th,
+  .devotees-table td {
+    padding: 0.625rem 0.75rem;
+  }
+}

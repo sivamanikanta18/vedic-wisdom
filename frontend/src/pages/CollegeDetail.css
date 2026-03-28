@@ -1,0 +1,397 @@
+/* College Detail Page Styling */
+.college-detail-page {
+  padding: 2rem 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.college-header {
+  margin-bottom: 1.5rem;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  color: var(--gold-dark);
+  text-decoration: none;
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+  transition: color 0.25s ease;
+}
+
+.back-link:hover {
+  color: var(--sacred-orange);
+}
+
+.college-header h1 {
+  font-size: 2rem;
+  background: var(--gradient-spiritual);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.location {
+  color: var(--light-text);
+  font-size: 1.1rem;
+}
+
+/* Tabs */
+.college-tabs {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 2px solid var(--gold-light);
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.college-tabs button {
+  padding: 0.75rem 1.25rem;
+  background: transparent;
+  border: none;
+  color: var(--light-text);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+}
+
+.college-tabs button:hover {
+  color: var(--gold-dark);
+}
+
+.college-tabs button.active {
+  color: var(--deep-maroon);
+  border-bottom-color: var(--gold-primary);
+}
+
+/* Tab Content */
+.tab-content {
+  min-height: 300px;
+}
+
+.section {
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gold-light);
+}
+
+.section h3 {
+  font-size: 1.15rem;
+  color: var(--deep-maroon);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--gold-light);
+}
+
+/* Temple Card Mini */
+.temple-card-mini {
+  background: var(--cream);
+  border-radius: var(--radius-sm);
+  padding: 1.25rem;
+  border: 1px solid var(--gold-light);
+}
+
+.temple-card-mini h4 {
+  color: var(--deep-maroon);
+  margin-bottom: 0.25rem;
+}
+
+.temple-card-mini p {
+  color: var(--light-text);
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.temple-card-mini a {
+  color: var(--gold-dark);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.temple-card-mini a:hover {
+  text-decoration: underline;
+}
+
+/* Guide Card */
+.guide-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--cream);
+  border-radius: var(--radius-sm);
+  padding: 1.25rem;
+}
+
+.guide-avatar {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, var(--gold-light), white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+}
+
+.guide-info h4 {
+  color: var(--deep-maroon);
+  margin-bottom: 0.25rem;
+}
+
+.guide-info p {
+  color: var(--light-text);
+  font-size: 0.9rem;
+}
+
+/* Contact Info */
+.contact-info p {
+  margin: 0.5rem 0;
+  color: var(--charcoal);
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, var(--cream), white);
+  border-radius: var(--radius-sm);
+  padding: 1.25rem;
+  text-align: center;
+  border: 1px solid var(--gold-light);
+}
+
+.stat-number {
+  display: block;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--deep-maroon);
+  margin-bottom: 0.25rem;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--light-text);
+}
+
+/* Programs Tab */
+.programs-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.program-card-detailed {
+  background: white;
+  border-radius: var(--radius-sm);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gold-light);
+}
+
+.program-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.program-header h4 {
+  color: var(--deep-maroon);
+  font-size: 1.15rem;
+}
+
+.active-badge {
+  background: #e8f5e9;
+  color: #2e7d32;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.schedule-info {
+  background: var(--cream);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.schedule-info p {
+  margin: 0.35rem 0;
+  color: var(--charcoal);
+  font-size: 0.95rem;
+}
+
+.description {
+  color: var(--light-text);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Students Grid */
+.students-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.student-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gold-light);
+  transition: all 0.25s ease;
+}
+
+.student-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.student-avatar {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, var(--gold-primary), var(--gold-accent));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: white;
+}
+
+.student-info h4 {
+  color: var(--deep-maroon);
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.student-info .legal-name {
+  font-size: 0.85rem;
+  color: var(--light-text);
+  margin-bottom: 0.5rem;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 15px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: capitalize;
+  margin-bottom: 0.5rem;
+}
+
+.badge.none {
+  background: var(--soft-gray);
+  color: var(--charcoal);
+}
+
+.badge.first {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.badge.second {
+  background: #fff3e0;
+  color: #ef6c00;
+}
+
+.services {
+  font-size: 0.8rem;
+  color: var(--gold-dark);
+}
+
+/* No Data */
+.no-data {
+  text-align: center;
+  color: var(--light-text);
+  padding: 3rem;
+  font-style: italic;
+}
+
+/* Loading & Error */
+.loading-container,
+.error-container {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid var(--gold-light);
+  border-top: 4px solid var(--gold-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.back-btn {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--gradient-gold);
+  color: white;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .college-detail-page {
+    padding: 1.5rem 1rem;
+  }
+  
+  .college-header h1 {
+    font-size: 1.6rem;
+  }
+  
+  .college-tabs button {
+    padding: 0.6rem 0.875rem;
+    font-size: 0.85rem;
+  }
+  
+  .guide-card {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .students-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .program-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}

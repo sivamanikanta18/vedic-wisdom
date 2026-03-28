@@ -1,0 +1,347 @@
+/* Social Feed Page Styling */
+.social-feed-page {
+  padding: 2rem 1.5rem;
+  max-width: 700px;
+  margin: 0 auto;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Header */
+.feed-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.feed-header h1 {
+  font-size: 2rem;
+  background: var(--gradient-spiritual);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.feed-header .subtitle {
+  color: var(--light-text);
+  font-size: 1rem;
+}
+
+/* Create Post */
+.create-post {
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gold-light);
+}
+
+.create-post textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 1.5px solid var(--soft-gray);
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  font-family: var(--font-body);
+  resize: vertical;
+  min-height: 100px;
+  transition: all 0.25s ease;
+}
+
+.create-post textarea:focus {
+  outline: none;
+  border-color: var(--gold-primary);
+  box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.1);
+}
+
+.post-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.type-select {
+  padding: 0.6rem 1rem;
+  border: 1.5px solid var(--soft-gray);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  background: white;
+  cursor: pointer;
+}
+
+.post-btn {
+  padding: 0.6rem 1.5rem;
+  background: var(--gradient-gold);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.post-btn:hover:not(:disabled) {
+  transform: scale(1.02);
+  box-shadow: var(--shadow-md);
+}
+
+.post-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Posts Feed */
+.posts-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* Post Card */
+.post-card {
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gold-light);
+  transition: all 0.25s ease;
+}
+
+.post-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* Post Header */
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.user-avatar {
+  width: 45px;
+  height: 45px;
+  background: linear-gradient(135deg, var(--gold-primary), var(--gold-accent));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  color: var(--deep-maroon);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.user-name:hover {
+  text-decoration: underline;
+}
+
+.temple-tag {
+  font-size: 0.8rem;
+  color: var(--gold-dark);
+  margin-top: 0.2rem;
+}
+
+.post-time {
+  font-size: 0.8rem;
+  color: var(--light-text);
+}
+
+/* Post Content */
+.post-content p {
+  color: var(--charcoal);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  white-space: pre-wrap;
+}
+
+.post-images {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.post-images img {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+  max-height: 300px;
+}
+
+/* Post Footer */
+.post-footer {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--soft-gray);
+}
+
+.like-btn, .comment-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: transparent;
+  border: none;
+  color: var(--light-text);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+}
+
+.like-btn:hover {
+  background: var(--cream);
+  color: var(--gold-dark);
+}
+
+.like-btn.liked {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.comment-btn:hover {
+  background: var(--cream);
+  color: var(--deep-maroon);
+}
+
+.post-type-badge {
+  margin-left: auto;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.post-type-badge.update {
+  background: var(--cream);
+  color: var(--charcoal);
+}
+
+.post-type-badge.experience {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.post-type-badge.question {
+  background: #fff3e0;
+  color: #ef6c00;
+}
+
+.post-type-badge.photo {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+/* Load More */
+.load-more-btn {
+  width: 100%;
+  padding: 1rem;
+  margin-top: 1.5rem;
+  background: transparent;
+  border: 2px solid var(--gold-primary);
+  color: var(--gold-dark);
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.load-more-btn:hover {
+  background: var(--gold-light);
+}
+
+/* Loading & Error */
+.loading-container,
+.no-posts {
+  text-align: center;
+  padding: 3rem;
+  color: var(--light-text);
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--gold-light);
+  border-top: 3px solid var(--gold-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error-message {
+  background: #fee;
+  color: #c33;
+  padding: 1rem;
+  border-radius: var(--radius-sm);
+  margin: 1rem 0;
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .social-feed-page {
+    padding: 1.5rem 1rem;
+  }
+  
+  .feed-header h1 {
+    font-size: 1.6rem;
+  }
+  
+  .post-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: stretch;
+  }
+  
+  .type-select {
+    width: 100%;
+  }
+  
+  .post-btn {
+    width: 100%;
+  }
+  
+  .post-header {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .post-time {
+    align-self: flex-start;
+  }
+}

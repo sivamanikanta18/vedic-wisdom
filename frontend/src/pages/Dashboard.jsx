@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./Dashboard.css";
 import { 
   requestNotificationPermission, 
@@ -13,6 +13,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [isFirstTime, setIsFirstTime] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [fullUser, setFullUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [setupData, setSetupData] = useState({
     dailyRounds: "",
@@ -32,6 +33,34 @@ const Dashboard = () => {
     currentStreak: 0,
     startDate: null
   });
+
+  const [debugInfo, setDebugInfo] = useState({});
+
+  // Authentic HKM Role Display Names - Only 3 roles
+  const getRoleDisplayName = (userType) => {
+    const roleNames = {
+      'folk_boy': 'Folk Boy',
+      'folk_guide': 'Folk Guide',
+      'admin': 'Administrator'
+    };
+    return roleNames[userType] || 'Folk Boy';
+  };
+
+  // Role-based color coding - Only 3 roles
+  const getRoleClass = (userType) => {
+    if (userType === 'admin') return 'role-admin';
+    if (userType === 'folk_guide') return 'role-guide';
+    return 'role-folk';
+  };
+
+  // Check if user is a folk boy
+  const isFolk = () => fullUser?.userType === 'folk_boy';
+  
+  // Check if user is folk guide
+  const isGuide = () => fullUser?.userType === 'folk_guide';
+  
+  // Check if user is admin
+  const isAdmin = () => fullUser?.userType === 'admin';
 
   useEffect(() => {
     // Load user profile from backend
@@ -124,16 +153,23 @@ const Dashboard = () => {
   const loadUserProfile = async () => {
     try {
       setLoading(true);
+      console.log('Loading user profile...');
       const response = await authAPI.getProfile();
+      console.log('Profile response:', response);
+      
       if (response.success) {
         const user = response.user;
+        console.log('User data:', user);
         
         // Check if spiritual data is set up
-        if (!user.spiritualData.dailyRounds) {
+        if (!user.spiritualData?.dailyRounds) {
+          console.log('First time user - showing setup');
           setIsFirstTime(true);
           setLoading(false);
         } else {
           setUserData(user.spiritualData);
+          setFullUser(user);
+          console.log('Full user set:', user.userType, user.initiationStatus);
           setIsFirstTime(false);
           
           // Load today's progress and stats in parallel for faster loading
@@ -183,11 +219,15 @@ const Dashboard = () => {
           
           setLoading(false);
         }
+      } else {
+        console.error('Profile load failed:', response);
+        setLoading(false);
       }
     } catch (error) {
       console.error('Error loading profile:', error);
+      setDebugInfo(prev => ({ ...prev, error: error.message, stack: error.stack }));
       setLoading(false);
-      if (error.message.includes('token')) {
+      if (error.message?.includes('token')) {
         logout();
         navigate("/login");
       }
@@ -198,8 +238,10 @@ const Dashboard = () => {
     e.preventDefault();
     
     try {
+      console.log('Saving spiritual data:', setupData);
       // Save spiritual data to backend
       const response = await authAPI.updateSpiritualData(setupData);
+      console.log('Save response:', response);
       
       if (response.success) {
         setUserData(setupData);
@@ -214,11 +256,14 @@ const Dashboard = () => {
           });
         }
 
-        alert("Your spiritual journey tracker is set up! 🙏");
+        alert("Your spiritual journey tracker is set up!");
+      } else {
+        console.error('Save failed:', response);
+        alert('Failed to save settings: ' + (response.message || 'Unknown error'));
       }
     } catch (error) {
       console.error('Error saving spiritual data:', error);
-      alert('Failed to save settings. Please try again.');
+      alert('Failed to save settings: ' + (error.message || 'Network error'));
     }
   };
 
@@ -401,8 +446,180 @@ const Dashboard = () => {
     <div className="dashboard-page">
       <div className="dashboard-container">
         <div className="dashboard-header">
-          <h1>🙏 Your Spiritual Dashboard</h1>
+          <h1>Your Spiritual Dashboard</h1>
           <p>Track your daily spiritual practice</p>
+        </div>
+
+        {/* DEBUG PANEL - Remove after fixing */}
+        {/* <div style={{background: '#ffeb3b', padding: '1rem', margin: '1rem 0', borderRadius: '8px', border: '2px solid #f57f17'}}>
+          <h3 style={{margin: '0 0 0.5rem 0', color: '#e65100'}}>Debug Info</h3>
+          <h3 style={{margin: '0 0 0.5rem 0', color: '#e65100'}}>🔧 Debug Info</h3>
+          <pre style={{fontSize: '0.8rem', overflow: 'auto', maxHeight: '200px', background: 'white', padding: '0.5rem', borderRadius: '4px'}}>
+{JSON.stringify({
+  loading,
+  isFirstTime,
+  hasFullUser: !!fullUser,
+  hasUserData: !!userData,
+  userType: fullUser?.userType,
+  initiationStatus: fullUser?.initiationStatus,
+  hasSpiritualName: !!fullUser?.spiritualName,
+  hasTemple: !!fullUser?.temple,
+  error: debugInfo.error || 'none'
+}, null, 2)}
+          </pre>
+        </div> */}
+
+        {/* Professional HKM Devotee Identity Card - only show when fullUser loaded */}
+        {fullUser && (
+          <div className="hkm-identity-card">
+            <div className="identity-header">
+              <div className={`role-badge ${getRoleClass(fullUser.userType)}`}>
+                {getRoleDisplayName(fullUser.userType)}
+              </div>
+              <div className="user-basic-info">
+                <h2 className="user-name">{fullUser.name || 'User'}</h2>
+                <p className="user-email">{fullUser.email}</p>
+              </div>
+              {fullUser.spiritualName && (
+                <div className="spiritual-name-header">
+                  <span className="spiritual-label">Spiritual Name</span>
+                  <span className="spiritual-value">{fullUser.spiritualName}</span>
+                </div>
+              )}
+            </div>
+            
+            <div className="identity-body">
+              <div className="identity-main">
+                <div className="initiation-status">
+                  <span className={`status-badge ${fullUser.initiationStatus || 'none'}`}>
+                    {fullUser.initiationStatus === 'none' && 'Not Initiated'}
+                    {fullUser.initiationStatus === 'first' && 'First Initiated'}
+                    {fullUser.initiationStatus === 'second' && 'Second Initiated'}
+                    {!fullUser.initiationStatus && 'Not Initiated'}
+                  </span>
+                </div>
+                
+                {fullUser.temple && (
+                  <div className="temple-affiliation">
+                    <span className="affiliation-text">Temple: {fullUser.temple.name}</span>
+                    <Link to={`/temples/${fullUser.temple._id}`} className="view-link">View</Link>
+                  </div>
+                )}
+                
+                {fullUser.college && (
+                  <div className="college-affiliation">
+                    <span className="affiliation-text">College: {fullUser.college.name}</span>
+                    <Link to={`/colleges/${fullUser.college._id}`} className="view-link">View</Link>
+                  </div>
+                )}
+              </div>
+              
+              <div className="identity-stats">
+                <div className="id-stat">
+                  <span className="id-stat-value">{fullUser.serviceRoles?.length || 0}</span>
+                  <span className="id-stat-label">Services</span>
+                </div>
+                <div className="id-stat">
+                  <span className="id-stat-value">
+                    {new Date(fullUser.joinDate || Date.now()).getFullYear()}
+                  </span>
+                  <span className="id-stat-label">Member Since</span>
+                </div>
+                <div className="id-stat">
+                  <span className="id-stat-value">{overallStats.totalRounds || 0}</span>
+                  <span className="id-stat-label">Total Rounds</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Role-Based Quick Actions - Only 3 roles: folk_boy, folk_guide, admin */}
+        <div className="role-actions-section">
+          <h3>Quick Actions</h3>
+          <div className="role-actions-grid">
+            {/* Folk Boy sees Learning links + Chatbot */}
+            {fullUser && isFolk() && (
+              <>
+                <Link to="/scriptures" className="role-action-btn">
+                  <span className="action-text">Scriptures</span>
+                </Link>
+                <Link to="/chanting" className="role-action-btn">
+                  <span className="action-text">Chanting</span>
+                </Link>
+                <Link to="/quiz" className="role-action-btn">
+                  <span className="action-text">Quiz</span>
+                </Link>
+                <Link to="/games" className="role-action-btn">
+                  <span className="action-text">Games</span>
+                </Link>
+                <Link to="/krishna-chat" className="role-action-btn highlight">
+                  <span className="action-text">Ask Sastra</span>
+                </Link>
+                {fullUser.assignedGuide && (
+                  <div className="role-action-btn info">
+                    <span className="action-text">
+                      Guide: {fullUser.assignedGuide.spiritualName || fullUser.assignedGuide.name}
+                    </span>
+                  </div>
+                )}
+              </>
+            )}
+            
+            {/* Folk Guide sees Learning + HKM + Student Management */}
+            {fullUser && isGuide() && (
+              <>
+                <Link to="/scriptures" className="role-action-btn">
+                  <span className="action-text">Scriptures</span>
+                </Link>
+                <Link to="/chanting" className="role-action-btn">
+                  <span className="action-text">Chanting</span>
+                </Link>
+                <Link to="/quiz" className="role-action-btn">
+                  <span className="action-text">Quiz</span>
+                </Link>
+                <Link to="/games" className="role-action-btn">
+                  <span className="action-text">Games</span>
+                </Link>
+                <Link to="/krishna-chat" className="role-action-btn">
+                  <span className="action-text">Ask Sastra</span>
+                </Link>
+                <Link to="/temples" className="role-action-btn">
+                  <span className="action-text">Temples</span>
+                </Link>
+                <Link to="/guide/students" className="role-action-btn highlight">
+                  <span className="action-text">My Students ({fullUser.students?.length || 0})</span>
+                </Link>
+                <Link to="/community" className="role-action-btn">
+                  <span className="action-text">Community</span>
+                </Link>
+              </>
+            )}
+            
+            {/* Admin sees everything */}
+            {fullUser && isAdmin() && (
+              <>
+                <Link to="/temples" className="role-action-btn">
+                  <span className="action-text">Temples</span>
+                </Link>
+                <Link to="/colleges" className="role-action-btn">
+                  <span className="action-text">Colleges</span>
+                </Link>
+                <Link to="/community" className="role-action-btn">
+                  <span className="action-text">Community</span>
+                </Link>
+                <Link to="/akshaya-patra" className="role-action-btn highlight">
+                  <span className="action-text">Akshaya Patra</span>
+                </Link>
+                <Link to="/events" className="role-action-btn">
+                  <span className="action-text">Events</span>
+                </Link>
+                <Link to="/admin/users" className="role-action-btn admin">
+                  <span className="action-text">User Management</span>
+                </Link>
+              </>
+            )}
+          </div>
         </div>
 
         {/* Today's Progress */}
@@ -457,25 +674,21 @@ const Dashboard = () => {
         {/* Stats Grid - Today */}
         <div className="stats-grid">
           <div className="stat-card">
-            <div className="stat-icon">🔥</div>
             <div className="stat-value">{getStreak()}</div>
             <div className="stat-label">Day Streak</div>
           </div>
 
           <div className="stat-card">
-            <div className="stat-icon">⏱️</div>
             <div className="stat-value">{todayProgress.chantingMinutes}</div>
             <div className="stat-label">Minutes Today</div>
           </div>
 
           <div className="stat-card">
-            <div className="stat-icon">🎯</div>
             <div className="stat-value">{Math.round(getProgressPercentage())}%</div>
             <div className="stat-label">Goal Progress</div>
           </div>
 
           <div className="stat-card">
-            <div className="stat-icon">📿</div>
             <div className="stat-value">{todayProgress.roundsCompleted * 108}</div>
             <div className="stat-label">Mantras Chanted</div>
           </div>
@@ -483,7 +696,7 @@ const Dashboard = () => {
 
         {/* Overall Statistics from Day 1 */}
         <div className="overall-stats-section">
-          <h2>📊 Overall Journey Statistics</h2>
+          <h2>Overall Journey Statistics</h2>
           <p className="journey-start">
             Journey started: {overallStats.startDate ? new Date(overallStats.startDate).toLocaleDateString() : 'Today'}
           </p>
@@ -491,19 +704,16 @@ const Dashboard = () => {
           {/* First Row - 3 cards */}
           <div className="stats-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)', marginBottom: '1rem' }}>
             <div className="stat-card overall">
-              <div className="stat-icon">📅</div>
               <div className="stat-value">{overallStats.totalDays}</div>
               <div className="stat-label">Total Days</div>
             </div>
 
             <div className="stat-card overall">
-              <div className="stat-icon">✅</div>
               <div className="stat-value">{overallStats.activeDays}</div>
               <div className="stat-label">Active Days</div>
             </div>
 
             <div className="stat-card overall">
-              <div className="stat-icon">🔢</div>
               <div className="stat-value">{overallStats.totalRounds}</div>
               <div className="stat-label">Total Rounds</div>
             </div>
@@ -512,19 +722,16 @@ const Dashboard = () => {
           {/* Second Row - 3 cards */}
           <div className="stats-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
             <div className="stat-card overall">
-              <div className="stat-icon">⏰</div>
               <div className="stat-value">{Math.floor(overallStats.totalMinutes / 60)}h {overallStats.totalMinutes % 60}m</div>
               <div className="stat-label">Total Time</div>
             </div>
 
             <div className="stat-card overall">
-              <div className="stat-icon">🙏</div>
               <div className="stat-value">{overallStats.totalRounds * 108}</div>
               <div className="stat-label">Total Mantras</div>
             </div>
 
             <div className="stat-card overall">
-              <div className="stat-icon">📈</div>
               <div className="stat-value">{overallStats.totalDays > 0 ? Math.round((overallStats.totalRounds / overallStats.totalDays) * 10) / 10 : 0}</div>
               <div className="stat-label">Avg Rounds/Day</div>
             </div>
@@ -535,12 +742,12 @@ const Dashboard = () => {
         <div className="motivation-card">
           {todayProgress.roundsCompleted >= userData?.dailyRounds ? (
             <>
-              <h3>🎉 Congratulations!</h3>
+              <h3>Congratulations!</h3>
               <p>You've completed your daily goal! Keep up the excellent spiritual practice!</p>
             </>
           ) : (
             <>
-              <h3>Keep Going! 💪</h3>
+              <h3>Keep Going!</h3>
               <p>
                 You're {userData?.dailyRounds - todayProgress.roundsCompleted} rounds away from 
                 completing today's goal. Hare Krishna!
@@ -557,13 +764,13 @@ const Dashboard = () => {
             }}
             className="settings-btn"
           >
-            ⚙️ Update Goals
+            Update Goals
           </button>
           <button 
             onClick={() => showChantingReminder(userData?.dailyRounds)}
             className="settings-btn"
           >
-            🔔 Test Notification
+            Test Notification
           </button>
           <button 
             onClick={() => {
@@ -586,7 +793,7 @@ const Dashboard = () => {
             className="settings-btn"
             style={{ backgroundColor: '#c33', color: 'white' }}
           >
-            🚪 Logout
+            Logout
           </button>
         </div>
       </div>

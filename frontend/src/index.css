@@ -1,43 +1,60 @@
-/* Spiritual Design System with Gold Theme */
+/* Professional Spiritual Design System */
 :root {
-	/* Primary Gold Palette */
-	--gold-primary: #D4AF37;
-	--gold-light: #F4E4C1;
-	--gold-dark: #B8941E;
-	--gold-accent: #FFD700;
-	
-	/* Sacred Colors */
-	--sacred-orange: #FF6B35;
-	--sacred-red: #C41E3A;
-	--sacred-saffron: #FF9933;
-	
-	/* Deep Spiritual Tones */
-	--deep-maroon: #5C0E10;
-	--deep-purple: #4A148C;
-	--deep-blue: #1A237E;
-	
-	/* Neutral Elegance */
-	--cream: #FFF8E7;
-	--ivory: #FFFFF0;
-	--warm-white: #FAF9F6;
-	--soft-gray: #E8E8E8;
-	--charcoal: #2C2C2C;
-	
-	/* Gradients */
-	--gradient-gold: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%);
-	--gradient-spiritual: linear-gradient(135deg, #FF6B35 0%, #C41E3A 50%, #4A148C 100%);
-	--gradient-sunset: linear-gradient(135deg, #FF9933 0%, #FF6B35 100%);
-	
-	/* Shadows */
-	--shadow-soft: 0 2px 8px rgba(212, 175, 55, 0.15);
-	--shadow-medium: 0 4px 16px rgba(212, 175, 55, 0.25);
-	--shadow-strong: 0 8px 32px rgba(212, 175, 55, 0.35);
-	--shadow-glow: 0 0 20px rgba(255, 215, 0, 0.4);
-	
-	/* Typography */
-	--font-heading: 'Georgia', 'Times New Roman', serif;
-	--font-body: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	--font-accent: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+  /* Refined Gold Palette */
+  --gold-primary: #C9A227;
+  --gold-light: #F5E6C8;
+  --gold-dark: #A8841D;
+  --gold-accent: #E5C100;
+  
+  /* Sacred Colors - More Muted & Professional */
+  --sacred-orange: #E86A35;
+  --sacred-red: #9B1B30;
+  --sacred-saffron: #F4A460;
+  
+  /* Deep Spiritual Tones */
+  --deep-maroon: #4A0D0F;
+  --deep-purple: #3A0F5C;
+  --deep-blue: #151A5C;
+  
+  /* Neutral Elegance */
+  --cream: #FDF9F0;
+  --ivory: #FFFCF5;
+  --warm-white: #F9F7F2;
+  --soft-gray: #E5E5E5;
+  --charcoal: #2D2D2D;
+  --light-text: #6B6B6B;
+  
+  /* Professional Shadows */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+  --shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.2);
+  --shadow-gold: 0 4px 16px rgba(201, 162, 39, 0.25);
+  
+  /* Gradients */
+  --gradient-gold: linear-gradient(135deg, #C9A227 0%, #E5C100 50%, #C9A227 100%);
+  --gradient-spiritual: linear-gradient(135deg, #E86A35 0%, #9B1B30 50%, #3A0F5C 100%);
+  --gradient-header: linear-gradient(135deg, #4A0D0F 0%, #9B1B30 50%, #3A0F5C 100%);
+  
+  /* Typography - More Professional */
+  --font-heading: 'Georgia', 'Times New Roman', serif;
+  --font-body: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-accent: 'Palatino Linotype', 'Book Antiqua', serif;
+  
+  /* Spacing Scale */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
 }
 
 * {

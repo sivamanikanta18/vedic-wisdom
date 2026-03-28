@@ -90,11 +90,74 @@ const userSchema = new mongoose.Schema({
       }
     }
   },
-  journeyStartDate: {
+  // HKM Temple Management Fields
+  temple: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Temple',
+    default: null
+  },
+  initiationStatus: {
+    type: String,
+    enum: ['none', 'first', 'second'],
+    default: 'none'
+  },
+  initiationDate: {
+    type: Date,
+    default: null
+  },
+  spiritualName: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  serviceRoles: [{
+    type: String,
+    enum: ['book_distribution', 'cooking', 'kirtan', 'deity_worship', 'teaching', 'administration', 'outreach', 'fundraising']
+  }],
+  isGuide: {
+    type: Boolean,
+    default: false
+  },
+  assignedGuide: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    default: null
+  },
+  students: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }],
+  college: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'College',
+    default: null
+  },
+  joinDate: {
     type: Date,
     default: Date.now
   },
+  totalRoundsChanted: {
+    type: Number,
+    default: 0
+  },
+  readingStreak: {
+    type: Number,
+    default: 0
+  },
+  userType: {
+    type: String,
+    enum: ['folk_boy', 'folk_guide', 'admin'],
+    default: 'folk_boy'
+  },
+  isActive: {
+    type: Boolean,
+    default: true
+  },
   createdAt: {
+    type: Date,
+    default: Date.now
+  },
+  updatedAt: {
     type: Date,
     default: Date.now
   }
@@ -102,6 +165,8 @@ const userSchema = new mongoose.Schema({
 
 // Hash password before saving
 userSchema.pre('save', async function(next) {
+  this.updatedAt = Date.now();
+  
   if (!this.isModified('password')) {
     return next();
   }

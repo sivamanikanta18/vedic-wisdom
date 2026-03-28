@@ -1,0 +1,261 @@
+/* Colleges Page Styling */
+.colleges-page {
+  padding: 2rem 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.colleges-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.colleges-header h1 {
+  font-size: 2.2rem;
+  background: var(--gradient-spiritual);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.colleges-header .subtitle {
+  color: var(--light-text);
+  font-size: 1.1rem;
+}
+
+/* Filters */
+.filters-bar {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.search-input {
+  flex: 1;
+  min-width: 250px;
+  padding: 0.875rem 1.25rem;
+  border: 1.5px solid var(--soft-gray);
+  border-radius: var(--radius-xl);
+  font-size: 1rem;
+  transition: all 0.25s ease;
+  background: white;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--gold-primary);
+  box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.1);
+}
+
+.filter-select {
+  padding: 0.875rem 1.25rem;
+  border: 1.5px solid var(--soft-gray);
+  border-radius: var(--radius-xl);
+  font-size: 1rem;
+  background: white;
+  min-width: 200px;
+  cursor: pointer;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: var(--gold-primary);
+}
+
+/* Grid */
+.colleges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+/* College Card */
+.college-card {
+  background: white;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gold-light);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.college-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.college-header {
+  background: linear-gradient(135deg, var(--deep-maroon), var(--deep-purple));
+  color: white;
+  padding: 1.25rem;
+}
+
+.college-header h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: white;
+}
+
+.college-header .location {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.college-info {
+  padding: 1.25rem;
+  flex-grow: 1;
+}
+
+.temple-link {
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+}
+
+.temple-link a {
+  color: var(--gold-dark);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.temple-link a:hover {
+  text-decoration: underline;
+}
+
+.guide-info {
+  color: var(--light-text);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.stats-row {
+  display: flex;
+  gap: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--gold-light);
+}
+
+.stat {
+  font-size: 0.9rem;
+  color: var(--light-text);
+}
+
+.stat strong {
+  color: var(--deep-maroon);
+  font-size: 1.1rem;
+  display: block;
+}
+
+/* Programs Preview */
+.programs-preview {
+  padding: 0 1.25rem 1.25rem;
+}
+
+.programs-preview h4 {
+  font-size: 0.9rem;
+  color: var(--deep-maroon);
+  margin-bottom: 0.75rem;
+}
+
+.programs-preview ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.programs-preview li {
+  padding: 0.35rem 0;
+  font-size: 0.9rem;
+  color: var(--charcoal);
+  border-bottom: 1px solid var(--soft-gray);
+}
+
+.programs-preview li:last-child {
+  border-bottom: none;
+}
+
+.programs-preview .more {
+  color: var(--gold-dark);
+  font-style: italic;
+}
+
+/* View Button */
+.view-btn {
+  display: block;
+  text-align: center;
+  padding: 0.875rem;
+  background: var(--gradient-gold);
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.25s ease;
+}
+
+.view-btn:hover {
+  opacity: 0.95;
+}
+
+/* No Results */
+.no-results {
+  text-align: center;
+  padding: 3rem;
+  color: var(--light-text);
+}
+
+/* Loading & Error */
+.loading-container,
+.error-container {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid var(--gold-light);
+  border-top: 4px solid var(--gold-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error-message {
+  background: #fee;
+  color: #c33;
+  padding: 1rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .colleges-page {
+    padding: 1.5rem 1rem;
+  }
+  
+  .colleges-header h1 {
+    font-size: 1.75rem;
+  }
+  
+  .filters-bar {
+    flex-direction: column;
+  }
+  
+  .search-input,
+  .filter-select {
+    width: 100%;
+  }
+  
+  .colleges-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -10,6 +10,10 @@ import chatbotRoutes from './routes/chatbot.js';
 import { publicRouter } from './routes/chatbot.js';
 import chatbotAIRoutes from './routes/chatbot-ai.js';
 import { publicRouter as publicAIRouter } from './routes/chatbot-ai.js';
+import templeRoutes from './routes/temples.js';
+import collegeRoutes from './routes/colleges.js';
+import postRoutes from './routes/posts.js';
+import kitchenRoutes from './routes/kitchens.js';
 import mongoose from 'mongoose';
 
 dotenv.config();
@@ -28,6 +32,10 @@ app.use('/api/chatbot', chatbotRoutes);
 app.use('/api/chatbot-ai', chatbotAIRoutes);
 app.use('/api/chatbot-public', publicRouter);
 app.use('/api/ai', publicAIRouter);
+app.use('/api/temples', templeRoutes);
+app.use('/api/colleges', collegeRoutes);
+app.use('/api/posts', postRoutes);
+app.use('/api/kitchens', kitchenRoutes);
 
 app.get('/api/health', (req, res) => {
   const dbStatus = mongoose.connection.readyState;

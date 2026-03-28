@@ -1,0 +1,178 @@
+/* Temples Page Styling */
+.temples-page {
+  padding: 2rem 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.temples-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.temples-header h1 {
+  font-size: 2.2rem;
+  background: var(--gradient-spiritual);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.temples-header .subtitle {
+  color: var(--light-text);
+  font-size: 1.1rem;
+}
+
+.search-bar {
+  max-width: 500px;
+  margin: 0 auto 2rem;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 0.875rem 1.25rem;
+  border: 1.5px solid var(--soft-gray);
+  border-radius: var(--radius-xl);
+  font-size: 1rem;
+  transition: all 0.25s ease;
+  background: white;
+}
+
+.search-bar input:focus {
+  outline: none;
+  border-color: var(--gold-primary);
+  box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.1);
+}
+
+.temples-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.temple-card {
+  background: white;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 1px solid var(--gold-light);
+}
+
+.temple-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.temple-image {
+  height: 160px;
+  background: linear-gradient(135deg, var(--deep-maroon), var(--deep-purple));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.temple-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.temple-placeholder {
+  font-size: 3rem;
+}
+
+.temple-info {
+  padding: 1.25rem;
+}
+
+.temple-info h3 {
+  font-size: 1.25rem;
+  color: var(--deep-maroon);
+  margin-bottom: 0.5rem;
+}
+
+.location {
+  color: var(--light-text);
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+}
+
+.location span {
+  margin-right: 0.25rem;
+}
+
+.temple-stats {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+  color: var(--gold-dark);
+}
+
+.view-btn {
+  display: inline-block;
+  padding: 0.6rem 1.25rem;
+  background: var(--gradient-gold);
+  color: white;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.25s ease;
+}
+
+.view-btn:hover {
+  transform: scale(1.02);
+  box-shadow: var(--shadow-gold);
+}
+
+.loading-container {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid var(--gold-light);
+  border-top: 4px solid var(--gold-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.no-results {
+  text-align: center;
+  padding: 3rem;
+  color: var(--light-text);
+}
+
+.error-message {
+  background: #fee;
+  color: #c33;
+  padding: 1rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .temples-page {
+    padding: 1.5rem 1rem;
+  }
+  
+  .temples-header h1 {
+    font-size: 1.75rem;
+  }
+  
+  .temples-grid {
+    grid-template-columns: 1fr;
+  }
+}

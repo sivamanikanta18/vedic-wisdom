@@ -216,6 +216,54 @@ router.delete('/users/cleanup/test-users', async (req, res) => {
   }
 });
 
+// Update user role
+router.put('/users/:id/role', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { userType } = req.body;
+
+    // Validate role
+    const validRoles = ['folk_boy', 'folk_guide', 'admin'];
+    if (!validRoles.includes(userType)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid role. Must be one of: folk_boy, folk_guide, admin'
+      });
+    }
+
+    const user = await User.findByIdAndUpdate(
+      id,
+      { userType },
+      { new: true }
+    ).select('-password');
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+
+    res.json({
+      success: true,
+      message: `User role updated to ${userType}`,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        userType: user.userType
+      }
+    });
+  } catch (error) {
+    console.error('Update user role error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error updating user role',
+      error: error.message
+    });
+  }
+});
+
 // Get database statistics
 router.get('/stats', async (req, res) => {
   try {

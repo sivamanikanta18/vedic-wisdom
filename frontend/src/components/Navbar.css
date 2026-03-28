@@ -248,6 +248,74 @@
   visibility: visible;
 }
 
+/* --- DROPDOWN MENUS --- */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-toggle {
+  color: var(--gold-light);
+  padding: 0.8rem 1.2rem;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: var(--font-accent);
+  letter-spacing: 0.5px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+.dropdown-toggle:hover {
+  color: var(--gold-accent);
+  background: rgba(255, 215, 0, 0.1);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 200px;
+  background: linear-gradient(135deg, var(--deep-maroon), var(--deep-purple));
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 100;
+  border: 1px solid var(--gold-primary);
+  overflow: hidden;
+}
+
+.dropdown-menu.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-menu a {
+  display: block;
+  color: var(--gold-light);
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.dropdown-menu a:last-child {
+  border-bottom: none;
+}
+
+.dropdown-menu a:hover {
+  background: rgba(255, 215, 0, 0.15);
+  color: var(--gold-accent);
+  padding-left: 1.25rem;
+}
+
 /* --- DESKTOP STYLES --- */
 @media (min-width: 769px) {
   .navbar {
@@ -344,6 +412,19 @@
     border-color: var(--gold-accent);
     transform: translateY(-2px);
   }
+}
+
+/* Mobile Section Titles */
+.mobile-section-title {
+  color: var(--gold-accent);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 1rem 1.5rem 0.5rem;
+  margin-top: 0.5rem;
+  border-top: 1px solid rgba(255, 215, 0, 0.3);
+  font-family: var(--font-heading);
 }
 
 /* --- LARGE DESKTOP --- */

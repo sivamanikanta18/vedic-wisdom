@@ -66,36 +66,30 @@ router.post('/update', async (req, res) => {
     }
 
     const date = new Date(dateString);
+    const userEmail = await getUserEmail(req.userId);
 
-    let progress = await Progress.findOne({ 
-      userId: req.userId, 
-      dateString 
-    });
+    // Use atomic upsert to avoid race conditions
+    const updateData = {
+      userId: req.userId,
+      date,
+      dateString,
+      lastChanted: new Date(),
+      userEmail,
+      updatedAt: Date.now()
+    };
 
-    if (progress) {
-      // Update existing progress
-      if (roundsCompleted !== undefined) progress.roundsCompleted = roundsCompleted;
-      if (chantingMinutes !== undefined) progress.chantingMinutes = chantingMinutes;
-      progress.lastChanted = new Date();
+    if (roundsCompleted !== undefined) updateData.roundsCompleted = roundsCompleted;
+    if (chantingMinutes !== undefined) updateData.chantingMinutes = chantingMinutes;
 
-      if (!progress.userEmail) {
-        progress.userEmail = await getUserEmail(req.userId);
+    const progress = await Progress.findOneAndUpdate(
+      { userId: req.userId, dateString },
+      { $set: updateData },
+      { 
+        upsert: true, 
+        new: true,
+        setDefaultsOnInsert: { roundsCompleted: 0, chantingMinutes: 0 }
       }
-    } else {
-      // Create new progress
-      const userEmail = await getUserEmail(req.userId);
-      progress = new Progress({
-        userId: req.userId,
-        userEmail,
-        date,
-        dateString,
-        roundsCompleted: roundsCompleted || 0,
-        chantingMinutes: chantingMinutes || 0,
-        lastChanted: new Date()
-      });
-    }
-
-    await progress.save();
+    );
 
     res.json({
       success: true,

@@ -10,6 +10,7 @@ import chatbotRoutes from './routes/chatbot.js';
 import { publicRouter } from './routes/chatbot.js';
 import chatbotAIRoutes from './routes/chatbot-ai.js';
 import { publicRouter as publicAIRouter } from './routes/chatbot-ai.js';
+import guideEventsRoutes from './routes/guideEvents.js';
 import templeRoutes from './routes/temples.js';
 import collegeRoutes from './routes/colleges.js';
 import postRoutes from './routes/posts.js';
@@ -35,6 +36,7 @@ app.use('/api/ai', publicAIRouter);
 app.use('/api/temples', templeRoutes);
 app.use('/api/colleges', collegeRoutes);
 app.use('/api/posts', postRoutes);
+app.use('/api/guide/events', guideEventsRoutes);
 app.use('/api/kitchens', kitchenRoutes);
 
 app.get('/api/health', (req, res) => {

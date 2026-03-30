@@ -153,13 +153,13 @@ router.post('/login', async (req, res) => {
       });
     }
 
-    // Update user role if different from selected
-    if (userType && ['folk_boy', 'folk_guide', 'admin'].includes(userType)) {
-      if (user.userType !== userType) {
-        user.userType = userType;
-        await user.save();
-        console.log(`User ${email} switched role to ${userType}`);
-      }
+    // Validate role selection - user must login with their assigned role
+    if (userType && userType !== user.userType) {
+      return res.status(403).json({
+        success: false,
+        message: `Access denied. You are registered as a ${user.userType.replace('_', ' ').toUpperCase()}, not as a ${userType.replace('_', ' ').toUpperCase()}.`,
+        actualRole: user.userType
+      });
     }
 
     // Generate JWT token

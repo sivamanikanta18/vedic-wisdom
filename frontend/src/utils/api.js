@@ -387,9 +387,12 @@ export const logout = () => {
 export const adminAPI = {
   getUsers: async () => {
     const token = getAuthToken();
-    const response = await fetch(`${API_BASE_URL}/admin/users`, {
+    // Add cache-busting timestamp to prevent stale data
+    const timestamp = Date.now();
+    const response = await fetch(`${API_BASE_URL}/admin/users?_t=${timestamp}`, {
       headers: {
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${token}`,
+        'Cache-Control': 'no-cache'
       }
     });
     return handleResponse(response);
@@ -404,6 +407,68 @@ export const adminAPI = {
         'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify({ userType })
+    });
+    return handleResponse(response);
+  }
+};
+
+// Guide API for student management
+export const guideAPI = {
+  // Get all students assigned to a guide
+  getStudents: async (guideId) => {
+    const token = localStorage.getItem('authToken');
+    const response = await fetch(`${API_BASE_URL}/admin/guides/${guideId}/students`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    return handleResponse(response);
+  },
+
+  // Assign a student to a guide
+  assignStudent: async (guideId, studentId) => {
+    const token = localStorage.getItem('authToken');
+    const response = await fetch(`${API_BASE_URL}/admin/guides/${guideId}/students`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ studentId })
+    });
+    return handleResponse(response);
+  },
+
+  // Remove a student from a guide
+  removeStudent: async (guideId, studentId) => {
+    const token = localStorage.getItem('authToken');
+    const response = await fetch(`${API_BASE_URL}/admin/guides/${guideId}/students/${studentId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    return handleResponse(response);
+  },
+
+  // Get all unassigned students
+  getUnassignedStudents: async () => {
+    const token = localStorage.getItem('authToken');
+    const response = await fetch(`${API_BASE_URL}/admin/students/unassigned`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    return handleResponse(response);
+  },
+
+  // Get all guides
+  getAllGuides: async () => {
+    const token = localStorage.getItem('authToken');
+    const response = await fetch(`${API_BASE_URL}/admin/guides`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
     });
     return handleResponse(response);
   }

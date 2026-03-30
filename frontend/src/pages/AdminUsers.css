@@ -17,7 +17,8 @@
 
 .admin-header p {
   color: var(--charcoal);
-  opacity: 0.8;
+  opacity: 0.7;
+  font-size: 1.1rem;
 }
 
 .users-stats {

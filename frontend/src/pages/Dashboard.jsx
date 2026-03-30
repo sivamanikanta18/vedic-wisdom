@@ -587,8 +587,11 @@ const Dashboard = () => {
                 <Link to="/temples" className="role-action-btn">
                   <span className="action-text">Temples</span>
                 </Link>
-                <Link to="/guide/students" className="role-action-btn highlight">
-                  <span className="action-text">My Students ({fullUser.students?.length || 0})</span>
+                <Link to="/guide/dashboard" className="role-action-btn highlight">
+                  <span className="action-text">College Program</span>
+                </Link>
+                <Link to="/colleges" className="role-action-btn">
+                  <span className="action-text">Colleges</span>
                 </Link>
                 <Link to="/community" className="role-action-btn">
                   <span className="action-text">Community</span>

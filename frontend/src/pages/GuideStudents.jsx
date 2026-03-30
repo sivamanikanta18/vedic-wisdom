@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { authAPI, adminAPI } from '../utils/api';
+import { authAPI, guideAPI } from '../utils/api';
 import './GuideStudents.css';
 
 function GuideStudents() {
@@ -9,6 +9,9 @@ function GuideStudents() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [showAssignModal, setShowAssignModal] = useState(false);
+  const [unassignedStudents, setUnassignedStudents] = useState([]);
+  const [assignLoading, setAssignLoading] = useState(false);
 
   useEffect(() => {
     loadGuideData();
@@ -20,12 +23,15 @@ function GuideStudents() {
       // Get current user's profile (guide)
       const response = await authAPI.getProfile();
       if (response.success) {
-        setGuide(response.user);
-        // If guide has students array, load their details
-        if (response.user.students && response.user.students.length > 0) {
-          // For now, we'll just store the student IDs
-          // In a real implementation, you'd fetch student details
-          setStudents(response.user.students);
+        const currentGuide = response.user;
+        setGuide(currentGuide);
+        
+        // Fetch students for this guide
+        if (currentGuide._id) {
+          const studentsResponse = await guideAPI.getStudents(currentGuide._id);
+          if (studentsResponse.success) {
+            setStudents(studentsResponse.students || []);
+          }
         }
       } else {
         setError('Failed to load guide data');
@@ -37,11 +43,6 @@ function GuideStudents() {
     }
   };
 
-  const handleAssignStudent = async (studentEmail) => {
-    // This would be implemented to assign a student to this guide
-    alert('Student assignment feature - to be implemented');
-  };
-
   const filteredStudents = students.filter(student => {
     const query = searchQuery.toLowerCase();
     return (
@@ -49,6 +50,43 @@ function GuideStudents() {
       (student.email && student.email.toLowerCase().includes(query))
     );
   });
+
+  const loadUnassignedStudents = async () => {
+    try {
+      setAssignLoading(true);
+      const response = await guideAPI.getUnassignedStudents();
+      if (response.success) {
+        setUnassignedStudents(response.students || []);
+      }
+    } catch (err) {
+      console.error('Error loading unassigned students:', err);
+    } finally {
+      setAssignLoading(false);
+    }
+  };
+
+  const handleAssignStudent = async (studentId) => {
+    if (!guide?._id) return;
+    
+    try {
+      setAssignLoading(true);
+      const response = await guideAPI.assignStudent(guide._id, studentId);
+      if (response.success) {
+        await loadGuideData();
+        setShowAssignModal(false);
+        alert('Student assigned successfully!');
+      }
+    } catch (err) {
+      alert('Error assigning student: ' + err.message);
+    } finally {
+      setAssignLoading(false);
+    }
+  };
+
+  const openAssignModal = () => {
+    loadUnassignedStudents();
+    setShowAssignModal(true);
+  };
 
   if (loading) {
     return (
@@ -85,7 +123,7 @@ function GuideStudents() {
           <span className="stat-label">Total Students</span>
         </div>
         <div className="stat-box active">
-          <span className="stat-number">{students.filter(s => s.isActive).length}</span>
+          <span className="stat-number">{students.filter(s => s.stats?.activeDays > 0).length}</span>
           <span className="stat-label">Active</span>
         </div>
         <div className="stat-box new">
@@ -165,6 +203,10 @@ function GuideStudents() {
       <div className="guide-actions">
         <h3>Quick Actions</h3>
         <div className="actions-grid">
+          <button onClick={openAssignModal} className="action-card assign-btn">
+            <span className="action-title">Assign Student</span>
+            <span className="action-desc">Add a new student to your guidance</span>
+          </button>
           <Link to="/colleges" className="action-card">
             <span className="action-title">Colleges</span>
             <span className="action-desc">View all colleges and students</span>
@@ -179,6 +221,47 @@ function GuideStudents() {
           </Link>
         </div>
       </div>
+
+      {/* Assign Student Modal */}
+      {showAssignModal && (
+        <div className="modal-overlay" onClick={() => setShowAssignModal(false)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3>Assign Student</h3>
+              <button className="close-btn" onClick={() => setShowAssignModal(false)}>×</button>
+            </div>
+            <div className="modal-body">
+              {assignLoading ? (
+                <div className="loading">Loading available students...</div>
+              ) : unassignedStudents.length === 0 ? (
+                <div className="no-students">
+                  <p>No unassigned students available.</p>
+                  <p>All students are already assigned to guides.</p>
+                </div>
+              ) : (
+                <div className="unassigned-list">
+                  <p className="modal-info">Select a student to assign to your guidance:</p>
+                  {unassignedStudents.map(student => (
+                    <div key={student.id} className="unassigned-item">
+                      <div className="student-info">
+                        <span className="student-name">{student.name || 'N/A'}</span>
+                        <span className="student-email">{student.email}</span>
+                      </div>
+                      <button 
+                        className="assign-btn-small"
+                        onClick={() => handleAssignStudent(student.id)}
+                        disabled={assignLoading}
+                      >
+                        Assign
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

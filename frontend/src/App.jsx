@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import Layout from "./components/Layout";
 import MinimalLayout from "./components/MinimalLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
+import RoleProtectedRoute from "./components/RoleProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
 import { startTimeTracking, stopTimeTracking } from "./utils/timeTracker";
 import { isAuthenticated } from "./utils/api";
@@ -55,7 +56,8 @@ const AkshayaPatra = lazy(() => import("./pages/AkshayaPatra"));
 const AdminUsers = lazy(() => import("./pages/AdminUsers"));
 
 // Guide Pages
-const GuideStudents = lazy(() => import("./pages/GuideStudents"));
+const GuideDashboard = lazy(() => import("./pages/GuideDashboard"));
+const FolkEvents = lazy(() => import("./pages/FolkEvents"));
 
 function App() {
   // Start global time tracking when app mounts
@@ -115,10 +117,19 @@ function App() {
             <Route path="/colleges/:id" element={<ProtectedRoute><CollegeDetail /></ProtectedRoute>} />
             <Route path="/community" element={<ProtectedRoute><SocialFeed /></ProtectedRoute>} />
             <Route path="/akshaya-patra" element={<ProtectedRoute><AkshayaPatra /></ProtectedRoute>} />
-            {/* Admin Routes */}
-            <Route path="/admin/users" element={<ProtectedRoute><AdminUsers /></ProtectedRoute>} />
-            {/* Guide Routes */}
-            <Route path="/guide/students" element={<ProtectedRoute><GuideStudents /></ProtectedRoute>} />
+            {/* Admin Routes - Only Admin can access */}
+            <Route path="/admin/users" element={
+              <RoleProtectedRoute allowedRoles={['admin']}>
+                <AdminUsers />
+              </RoleProtectedRoute>
+            } />
+            {/* Guide Routes - Guide and Admin can access */}
+            <Route path="/guide/dashboard" element={
+              <RoleProtectedRoute allowedRoles={['folk_guide', 'admin']}>
+                <GuideDashboard />
+              </RoleProtectedRoute>
+            } />
+            <Route path="/events" element={<ProtectedRoute><FolkEvents /></ProtectedRoute>} />
           </Route>
         </Routes>
       </Suspense>

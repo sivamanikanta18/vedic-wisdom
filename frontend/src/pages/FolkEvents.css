@@ -1,0 +1,190 @@
+.folk-events {
+  padding: 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.events-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.events-header h1 {
+  color: var(--deep-maroon);
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.events-header p {
+  color: var(--charcoal);
+  opacity: 0.7;
+  margin: 0;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  background: var(--cream);
+  border-radius: 12px;
+  color: var(--charcoal);
+}
+
+.empty-state p {
+  margin: 0.5rem 0;
+}
+
+.events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.event-card {
+  background: white;
+  border-radius: 10px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border: 1px solid var(--gold-light);
+}
+
+.event-info h3 {
+  color: var(--deep-maroon);
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+}
+
+.event-organizer {
+  color: var(--gold-primary);
+  font-size: 0.9rem;
+  margin: 0 0 0.5rem 0;
+  font-weight: 500;
+}
+
+.event-datetime {
+  color: var(--charcoal);
+  font-weight: 600;
+  margin: 0 0 0.25rem 0;
+}
+
+.event-location {
+  color: var(--charcoal);
+  opacity: 0.8;
+  margin: 0 0 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+.event-desc {
+  color: var(--charcoal);
+  opacity: 0.7;
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.rsvp-status {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  color: var(--charcoal);
+}
+
+.rsvp-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 15px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-left: 0.5rem;
+}
+
+.rsvp-badge.pending {
+  background: #f5f5f5;
+  color: #757575;
+}
+
+.rsvp-badge.going {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.rsvp-badge.not-going {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.rsvp-badge.maybe {
+  background: #fff3e0;
+  color: #ef6c00;
+}
+
+.rsvp-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.rsvp-btn {
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--gold-light);
+  background: white;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.rsvp-btn:hover {
+  border-color: var(--gold-primary);
+  background: var(--cream);
+}
+
+.rsvp-btn.active {
+  background: var(--deep-maroon);
+  color: white;
+  border-color: var(--deep-maroon);
+}
+
+.rsvp-btn.yes.active {
+  background: #2e7d32;
+  border-color: #2e7d32;
+}
+
+.rsvp-btn.no.active {
+  background: #c62828;
+  border-color: #c62828;
+}
+
+.rsvp-btn.maybe.active {
+  background: #ef6c00;
+  border-color: #ef6c00;
+}
+
+.rsvp-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.loading {
+  text-align: center;
+  padding: 3rem;
+  color: var(--charcoal);
+}
+
+@media (max-width: 768px) {
+  .folk-events {
+    padding: 1rem;
+  }
+  
+  .events-header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .event-card {
+    padding: 1rem;
+  }
+  
+  .rsvp-actions {
+    justify-content: center;
+  }
+}

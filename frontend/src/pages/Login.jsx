@@ -125,7 +125,7 @@ const Login = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="userType">Select Role</label>
+            <label htmlFor="userType">Select Role *</label>
             <select
               id="userType"
               name="userType"
@@ -133,6 +133,7 @@ const Login = () => {
               onChange={handleChange}
               disabled={loading}
               className="user-type-select"
+              required
             >
               <option value="folk_boy">Folk Boy</option>
               <option value="folk_guide">Folk Guide</option>
